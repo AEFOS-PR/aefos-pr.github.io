@@ -404,6 +404,13 @@
       </div>
     </div>
 
+    <div class="card" style="margin-top:16px">
+      <h3>Top 20 municípios em ARTs florestais no Paraná</h3>
+      <p class="csub">ARTs emitidas na modalidade · 2026 &nbsp;·&nbsp; <span class="highlight-key"><i></i> Municípios no raio da AEFOS (regionais Cascavel · Pato Branco)</span></p>
+      <div id="chart-top-mun"></div>
+      <p class="note"><b>Dois Vizinhos</b> — sede da AEFOS — é o <b>4º município do estado inteiro</b> em ARTs florestais. Ao todo, seis municípios do raio da AEFOS aparecem no Top 20 do Paraná.</p>
+    </div>
+
     <div class="grid g-2-31" style="margin-top:16px">
       <div class="card">
         <h3>Profissionais × ARTs — produtividade por Regional</h3>
@@ -600,6 +607,14 @@ const D={
     {k:'Apucarana',v:9.1,a:false},{k:'Pato Branco',v:6.7,a:true},{k:'Londrina',v:4.5,a:false},
     {k:'Cascavel',v:4.4,a:true},{k:'Guarapuava',v:4.1,a:false},{k:'Ponta Grossa',v:3.9,a:false},
     {k:'Maringá',v:3.9,a:false},{k:'Curitiba',v:0.8,a:false}],
+  topMun:[
+    {k:'Curitiba',v:257,a:false},{k:'Ponta Grossa',v:210,a:false},{k:'São José Dos Pinhais',v:151,a:false},
+    {k:'Dois Vizinhos',v:131,a:true},{k:'Irati',v:125,a:false},{k:'São Mateus Do Sul',v:108,a:false},
+    {k:'Jaguariaíva',v:105,a:false},{k:'Castro',v:83,a:false},{k:'Arapoti',v:79,a:false},
+    {k:'Piraí Do Sul',v:76,a:false},{k:'Campo Largo',v:72,a:false},{k:'Pinhão',v:69,a:false},
+    {k:'Prudentópolis',v:63,a:false},{k:'Pato Branco',v:62,a:true},{k:'Vitorino',v:53,a:true},
+    {k:'Cruz Machado',v:52,a:false},{k:'Cascavel',v:51,a:true},{k:'Lapa',v:50,a:false},
+    {k:'Francisco Beltrão',v:50,a:true},{k:'Coronel Domingos Soares',v:49,a:true}],
   irreg:['Falta de registro — Pessoa Jurídica','Exercício ilegal da profissão (P. Física)','Falta de ART',
     'Exercício ilegal da profissão (P. Jurídica)','Falta de responsável técnico','Exercício de atividades estranhas'],
   fiscServ:['Cultivo / produção de espécies florestais','Inventário florestal','Poda de árvores',
@@ -802,6 +817,7 @@ function renderAll(){
   hBars('chart-servicos',D.servicos,{labelW:300,rank:true,unit:'serviços',rowH:38});
   stackedH('chart-reg-prof',D.regProfRV,{labelW:120,rowH:34});
   hBars('chart-reg-art',D.regArt,{labelW:110,unit:'ARTs',rowH:34});
+  hBars('chart-top-mun',D.topMun,{rank:true,unit:'ARTs',labelW:225,rowH:30});
   hBars('chart-prod',D.prod,{labelW:110,unit:'ARTs/prof',rowH:32});
   hBars('chart-camara',D.camara,{labelW:200,unit:'processos',grad:true,rowH:44});
   meter('meter-fisc',256,500);
@@ -822,6 +838,7 @@ function applySig(){
     if(S.prof&&S.prof.byRegional) D.regProfRV=S.prof.byRegional;
     if(S.prof&&S.prof.serie)      D.profSerie=S.prof.serie;
     if(S.art&&S.art.byRegional)  D.regArt =S.art.byRegional;
+    if(S.art&&S.art.topMunicipios) D.topMun=S.art.topMunicipios;
     if(S.aefos&&S.aefos.prod)     D.prod  =S.aefos.prod;
     if(S.prof){
       D.genero=[{k:'Masculino',v:S.prof.masc,pct:pct(S.prof.masc,S.prof.masc+S.prof.fem)},

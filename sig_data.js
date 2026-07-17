@@ -32,8 +32,16 @@ window.SIG_DATA = {
       {"k":"Maringá","v":165,"a":false},{"k":"Apucarana","v":136,"a":false}
     ],
     "topMunicipios": [
-      {"k":"Curitiba","v":257},{"k":"Ponta Grossa","v":210},
-      {"k":"São José Dos Pinhais","v":151},{"k":"Dois Vizinhos","v":131},{"k":"Irati","v":125}
+      {"k":"Curitiba","v":257,"a":false},{"k":"Ponta Grossa","v":210,"a":false},
+      {"k":"São José Dos Pinhais","v":151,"a":false},{"k":"Dois Vizinhos","v":131,"a":true},
+      {"k":"Irati","v":125,"a":false},{"k":"São Mateus Do Sul","v":108,"a":false},
+      {"k":"Jaguariaíva","v":105,"a":false},{"k":"Castro","v":83,"a":false},
+      {"k":"Arapoti","v":79,"a":false},{"k":"Piraí Do Sul","v":76,"a":false},
+      {"k":"Campo Largo","v":72,"a":false},{"k":"Pinhão","v":69,"a":false},
+      {"k":"Prudentópolis","v":63,"a":false},{"k":"Pato Branco","v":62,"a":true},
+      {"k":"Vitorino","v":53,"a":true},{"k":"Cruz Machado","v":52,"a":false},
+      {"k":"Cascavel","v":51,"a":true},{"k":"Lapa","v":50,"a":false},
+      {"k":"Francisco Beltrão","v":50,"a":true},{"k":"Coronel Domingos Soares","v":49,"a":true}
     ]
   },
   "aefos": {

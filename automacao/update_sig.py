@@ -108,8 +108,16 @@ def main():
 
     areg = art_group("REGIONAL")
     art_total = sum(areg.values())
-    amun = art_group("MUNICIPIO")
-    top_mun = sorted(amun.items(), key=lambda kv: -kv[1])[:5]
+
+    # Top municípios (com regional -> marca as cidades do raio AEFOS em "a")
+    muns = []
+    for f in q(ART, ART_WHERE + f" AND ANO={ano}", stats=S("TOTAL"),
+               group="MUNICIPIO,REGIONAL", order="MUNICIPIO asc"):
+        a = f["attributes"]
+        muns.append({"k": titulo(a["MUNICIPIO"]), "v": int(a["total"] or 0),
+                     "a": (str(a.get("REGIONAL") or "").upper() in AEFOS)})
+    muns.sort(key=lambda d: -d["v"])
+    top_mun = muns[:20]
     log(f"ARTs {ano}: {art_total}")
 
     art_by = sorted([{"k": titulo(k), "v": v, "a": (k.upper() in AEFOS)} for k, v in areg.items()], key=lambda d: -d["v"])
@@ -138,7 +146,7 @@ def main():
             "serie": serie, "byRegional": byRegional,
         },
         "art": {"total": art_total, "byRegional": art_by,
-                "topMunicipios": [{"k": titulo(k), "v": v} for k, v in top_mun]},
+                "topMunicipios": top_mun},
         "aefos": {
             "prof": a_prof, "registro": a_reg, "visto": a_vis, "art": a_art, "masc": a_m, "fem": a_f,
             "pctProf": round(a_prof / prof_total * 100, 1) if prof_total else 0,
