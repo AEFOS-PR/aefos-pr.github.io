@@ -109,9 +109,7 @@
   .prov{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
     color:var(--amber-ink);background:var(--amber-soft);padding:3px 8px;border-radius:999px}
   input[type=text]{font:inherit;font-size:15px;padding:12px 13px;border:1px solid var(--ring);border-radius:11px;background:var(--surface);color:var(--ink);min-width:0;flex:1}
-  .pend{margin-top:20px;background:var(--amber-soft);border:1px solid var(--amber);border-radius:14px;padding:16px 18px;font-size:14.5px;color:var(--amber-ink)}
-  .pend b{color:var(--ink)}
-  .pend .field{margin-top:12px}
+  .fim{margin-top:18px;font-size:14.5px;color:var(--ink-2);background:var(--forest-100);border-radius:12px;padding:14px 16px}
   .note{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:72ch}
   .ponto{margin-top:16px;font-size:15px;color:var(--ink-2)}
   .ponto b{color:var(--ink)}
@@ -192,8 +190,8 @@
       catalisador, adotado por não haver valor próprio para etanol), sobre 21,34 MJ/L, com GWP de 27 e 273.
       <b>Coffee break:</b> porção padrão por pessoa de 10 g de café, 50 mL de leite, 200 mL de suco de laranja,
       100 g de pão ou bolo e 20 g de queijo, com os fatores médios globais por quilo de alimento.
-      <b>Distâncias:</b> o participante informa o município de origem e a organização lança a distância rodoviária
-      depois, na consolidação.
+      <b>Distâncias:</b> o participante informa só o município de origem. Na consolidação, a organização aplica
+      uma distância rodoviária média para cada município informado.
     </p>
   </div>
 </section>
@@ -224,7 +222,7 @@
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Protótipo de validação v2.1, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
+      © 2026 AEFOS · Protótipo de validação v2.2, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
     </div>
   </div>
 </footer>
@@ -308,7 +306,7 @@ function calcular(){
     } else {
       add("  k = "+k+(k===2?"  (retorna no dia)":"  (pernoita)"));
       if(D===null){
-        add("  d_ida    = a lancar pela organizacao, na consolidacao");
+        add("  d_ida    = distancia media do municipio, lancada na consolidacao");
         add("  D = d_ida x "+k);
       } else {
         add("  d_ida    = "+dIda+" km   [distancia simulada]");
@@ -416,7 +414,7 @@ function render(){
     var el=$("screen"); el.innerHTML="";
     var h=document.createElement("div"); h.className="q"; h.textContent="De qual município você saiu hoje?";
     var d=document.createElement("div"); d.className="qhint";
-    d.textContent="Digite o município e o estado. A distância até "+(mod.sede===1?"Pato Branco":"Dois Vizinhos")+" é lançada depois pela organização. Não é preciso informar quilometragem.";
+    d.textContent="Digite o município e o estado. Não é preciso informar quilometragem.";
     el.appendChild(h); el.appendChild(d);
     var f=document.createElement("div"); f.className="field";
     var inp=document.createElement("input"); inp.type="text"; inp.id="inpMun"; inp.maxLength=60;
@@ -505,34 +503,24 @@ function resultado(){
   var r=calcular(), el=$("screen"); el.innerHTML="";
 
   var h=document.createElement("div"); h.className="q";
-  h.textContent = r.pend ? "Sua emissão neste módulo, sem o deslocamento" : "Sua emissão neste módulo"; el.appendChild(h);
+  h.textContent = "Resposta concluída. Obrigado!"; el.appendChild(h);
+  var sub=document.createElement("div"); sub.className="qhint";
+  sub.textContent = r.pend ? "Sua emissão neste módulo, ainda sem o deslocamento:" : "Sua emissão neste módulo:"; el.appendChild(sub);
 
   var tot=document.createElement("div"); tot.className="total";
-  tot.innerHTML='<span class="n">'+nb(r.fossil)+'</span><span class="u">kg CO₂e'+(r.pend?' + deslocamento':'')+'</span>';
+  tot.innerHTML='<span class="n">'+nb(r.fossil)+'</span><span class="u">kg CO₂e</span>';
   el.appendChild(tot);
 
   var html="";
-  r.linhas.forEach(function(x){ html+="<tr><td>"+x[0]+"</td><td>"+(x[1]===null?"a calcular":nb(x[1])+" kg")+"</td></tr>"; });
+  r.linhas.forEach(function(x){ html+="<tr><td>"+x[0]+"</td><td>"+(x[1]===null?"na consolidação":nb(x[1])+" kg")+"</td></tr>"; });
   html+='<tr class="sum"><td>'+(r.pend?"Total parcial":"Total antrópico")+'</td><td>'+nb(r.fossil)+' kg</td></tr>';
-  html+='<tr class="bio"><td>CO₂ biogênico, fora do total</td><td>'+(r.pend?"a calcular":nb(r.bio)+" kg")+'</td></tr>';
+  html+='<tr class="bio"><td>CO₂ biogênico, fora do total</td><td>'+(r.pend?"na consolidação":nb(r.bio)+" kg")+'</td></tr>';
   var tb=document.createElement("table"); tb.className="brk"; tb.innerHTML="<tbody>"+html+"</tbody>";
   el.appendChild(tb);
 
-  if(r.pend || S.distSim>0){
-    var p=document.createElement("div"); p.className="pend";
-    var t1=document.createElement("div");
-    t1.innerHTML = r.pend
-      ? "<b>Deslocamento a calcular.</b> A distância rodoviária entre a origem informada e "+r.sede+" será lançada pela organização. Cada quilômetro rodado corresponde a <b>"+r.porKm.toLocaleString("pt-BR",{minimumFractionDigits:3,maximumFractionDigits:3})+" kg CO₂e</b> para você."
-      : "<b>Distância simulada: "+S.distSim.toLocaleString("pt-BR")+" km de ida.</b> Valor apenas para conferência do cálculo.";
-    p.appendChild(t1);
-    var f=document.createElement("div"); f.className="field";
-    var i=document.createElement("input"); i.type="number"; i.id="inpSim"; i.min="1"; i.max="3000"; i.step="1";
-    i.placeholder="Simular distância de ida, em km";
-    var b=document.createElement("button"); b.className="btn"; b.type="button"; b.textContent="Simular";
-    var go=function(){ var v=parseFloat(i.value); if(v>0&&v<=3000){ S.distSim=v; resultado(); } else { i.focus(); } };
-    b.addEventListener("click",go);
-    i.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); });
-    f.appendChild(i); f.appendChild(b); p.appendChild(f);
+  if(r.pend){
+    var p=document.createElement("p"); p.className="fim";
+    p.textContent="O deslocamento entra depois. A organização aplica a distância média de "+S.municipio+" até "+r.sede+" e soma ao seu resultado na consolidação do Circuito.";
     el.appendChild(p);
   }
 
@@ -545,14 +533,14 @@ function resultado(){
     el.appendChild(m);
   }
 
-  var det=document.createElement("details"); det.className="audit"; det.open=true;
+  var det=document.createElement("details"); det.className="audit"; det.open=false;
   var sum=document.createElement("summary"); sum.textContent="Memória de cálculo";
   var bd=document.createElement("div"); bd.className="audit-body";
   var pre=document.createElement("pre"); pre.className="trace"; pre.textContent=r.trace;
   bd.appendChild(pre); det.appendChild(sum); det.appendChild(bd); el.appendChild(det);
 
   var again=document.createElement("div"); again.className="opts";
-  again.appendChild(opt("Simular outro caso",null,function(){ S={}; idx=0; render(); }));
+  again.appendChild(opt("Responder outro módulo ou dia",null,function(){ S={}; idx=0; render(); }));
   el.appendChild(again);
 }
 
