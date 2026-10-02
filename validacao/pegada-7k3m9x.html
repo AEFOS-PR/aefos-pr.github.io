@@ -196,33 +196,12 @@
   </div>
 </section>
 
-<section class="block">
-  <div class="wrap">
-    <div class="kicker">Método</div>
-    <h2 class="sec">Dois pontos que decidem o resultado</h2>
-    <p class="ponto">
-      <b>Rateio por ocupantes.</b> A emissão do veículo é dividida pelo número de pessoas a bordo. Sem o rateio,
-      um automóvel com três participantes do mesmo evento é contabilizado três vezes, com dupla contagem direta
-      no inventário.
-    </p>
-    <p class="ponto">
-      <b>Fração biogênica.</b> O CO₂ do etanol anidro e do biodiesel das misturas obrigatórias é biogênico e vai
-      para linha apartada, fora do total antrópico. Numa viagem a etanol essa parcela representa quase todo o CO₂
-      emitido: somá-la ao total multiplicaria o resultado por dezenas de vezes.
-    </p>
-    <p class="note">
-      A nota metodológica completa, com a derivação dos fatores, os exemplos resolvidos e os pontos submetidos a
-      parecer, circula em arquivo separado.
-    </p>
-  </div>
-</section>
-
 <footer class="site">
   <div class="wrap">
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Protótipo de validação v2.3, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
+      © 2026 AEFOS · Protótipo de validação v2.5, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
     </div>
   </div>
 </footer>
@@ -514,9 +493,8 @@ function resultado(){
   p.textContent="Sua resposta do "+qual+" foi concluída. Ela ajuda a AEFOS a medir a pegada de carbono do Circuito e a planejar o plantio de mudas nativas que vai compensar as emissões do evento.";
   el.appendChild(p);
 
-  var again=document.createElement("div"); again.className="opts";
-  again.appendChild(opt("Responder outro módulo ou dia",null,function(){ S={}; idx=0; render(); }));
-  el.appendChild(again);
+  $("navRow").hidden = true;
+  $("prog").hidden = true;
 }
 
 $("back").addEventListener("click",function(){ if(idx>0){ idx--; render(); } });
