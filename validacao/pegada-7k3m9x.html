@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
-<title>Pegada de carbono do Circuito — validação técnica — AEFOS</title>
+<title>Pegada de carbono do Circuito | Validação técnica | AEFOS</title>
 <link rel="icon" href="../assets/favicon.png" type="image/png">
 <style>
   :root{
@@ -108,6 +108,10 @@
   table.tbl .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
   .prov{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
     color:var(--amber-ink);background:var(--amber-soft);padding:3px 8px;border-radius:999px}
+  input[type=text]{font:inherit;font-size:15px;padding:12px 13px;border:1px solid var(--ring);border-radius:11px;background:var(--surface);color:var(--ink);min-width:0;flex:1}
+  .pend{margin-top:20px;background:var(--amber-soft);border:1px solid var(--amber);border-radius:14px;padding:16px 18px;font-size:14.5px;color:var(--amber-ink)}
+  .pend b{color:var(--ink)}
+  .pend .field{margin-top:12px}
   .note{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:72ch}
   .ponto{margin-top:16px;font-size:15px;color:var(--ink-2)}
   .ponto b{color:var(--ink)}
@@ -164,29 +168,32 @@
     <div class="kicker">Parâmetros</div>
     <h2 class="sec">Fatores de emissão aplicados</h2>
     <p class="sec-lead">
-      Derivados dos parâmetros do IPCC 2006 (fator de emissão e poder calorífico) e das densidades correntes,
-      com separação da fração biogênica das misturas obrigatórias de etanol anidro e biodiesel.
+      Fatores fixos, com a referência de cada um. Os de combustível derivam dos parâmetros do IPCC 2006
+      (fator de emissão e poder calorífico) e das densidades correntes, com separação da fração biogênica das
+      misturas obrigatórias de etanol anidro e biodiesel.
     </p>
     <div class="scroller">
       <table class="tbl">
-        <thead><tr><th>Fonte</th><th>Fóssil</th><th>Biogênico</th><th>Situação</th></tr></thead>
+        <thead><tr><th>Fonte de emissão</th><th>Fator</th><th>Biogênico</th><th>Referência</th></tr></thead>
         <tbody>
-          <tr><td>Gasolina C (E27)</td><td class="mono">1,658 kgCO₂/L</td><td class="mono">0,408 kgCO₂/L</td><td>Derivado do IPCC</td></tr>
-          <tr><td>Diesel B (B13,7)</td><td class="mono">2,310 kgCO₂/L</td><td class="mono">0,230 kgCO₂/L</td><td>Derivado do IPCC</td></tr>
-          <tr><td>Etanol hidratado</td><td class="mono">0,020 kgCO₂e/L</td><td class="mono">1,546 kgCO₂/L</td><td><span class="prov">provisório</span></td></tr>
-          <tr><td>Energia elétrica, SIN</td><td class="mono">0,027 tCO₂/MWh</td><td class="mono">—</td><td>MCTI / SIRENE</td></tr>
-          <tr><td>Ônibus de linha</td><td class="mono">0,035 kgCO₂e/pass·km</td><td class="mono">—</td><td><span class="prov">provisório</span></td></tr>
-          <tr><td>Hospedagem</td><td class="mono">10,0 kgCO₂e/diária</td><td class="mono">—</td><td><span class="prov">provisório</span></td></tr>
-          <tr><td>Refeição</td><td class="mono">1,50 kgCO₂e</td><td class="mono">—</td><td><span class="prov">provisório</span></td></tr>
-          <tr><td>Coffee break</td><td class="mono">0,50 kgCO₂e</td><td class="mono">—</td><td><span class="prov">provisório</span></td></tr>
-          <tr><td>Sequestro por árvore, 20 anos</td><td class="mono">140 kgCO₂e</td><td class="mono">—</td><td>Totum / ESALQ / SOS Mata Atlântica</td></tr>
+          <tr><td>Gasolina C (E32)</td><td class="mono">1,545 kgCO₂/L</td><td class="mono">0,484 kgCO₂/L</td><td>IPCC 2006, mistura vigente desde 01/08/2026</td></tr>
+          <tr><td>Diesel B (B15)</td><td class="mono">2,275 kgCO₂/L</td><td class="mono">0,252 kgCO₂/L</td><td>IPCC 2006, mistura vigente desde 01/08/2025</td></tr>
+          <tr><td>Etanol hidratado (CH₄ e N₂O)</td><td class="mono">0,057 kgCO₂e/L</td><td class="mono">1,546 kgCO₂/L</td><td>IPCC 2006, v. 2, tab. 3.2.2; GWP do AR6</td></tr>
+          <tr><td>Energia elétrica, SIN</td><td class="mono">0,027 tCO₂/MWh</td><td class="mono"></td><td>MCTI, fator médio para inventários</td></tr>
+          <tr><td>Ônibus de linha</td><td class="mono">0,028 kgCO₂e/pass·km</td><td class="mono"></td><td>DESNZ/DEFRA 2025, ônibus rodoviário</td></tr>
+          <tr><td>Hospedagem</td><td class="mono">8,7 kgCO₂e/diária</td><td class="mono"></td><td>DESNZ/DEFRA 2024, hotel no Brasil</td></tr>
+          <tr><td>Coffee break</td><td class="mono">1,27 kgCO₂e</td><td class="mono"></td><td>Poore e Nemecek (2018), porção padrão</td></tr>
+          <tr><td>Sequestro por árvore, 20 anos</td><td class="mono">140 kgCO₂e</td><td class="mono"></td><td>Totum / ESALQ / SOS Mata Atlântica</td></tr>
         </tbody>
       </table>
     </div>
     <p class="note">
-      Os itens provisórios serão travados contra a versão vigente da Ferramenta de Cálculo do Programa Brasileiro
-      GHG Protocol (GVces/FGV) antes da entrada em operação. As distâncias rodoviárias da tabela de municípios
-      são preliminares e serão conferidas uma a uma.
+      <b>Etanol hidratado:</b> CH₄ de 18 kg/TJ (carros a etanol, Brasil) e N₂O de 8,0 kg/TJ (valor da gasolina com
+      catalisador, adotado por não haver valor próprio para etanol), sobre 21,34 MJ/L, com GWP de 27 e 273.
+      <b>Coffee break:</b> porção padrão por pessoa de 10 g de café, 50 mL de leite, 200 mL de suco de laranja,
+      100 g de pão ou bolo e 20 g de queijo, com os fatores médios globais por quilo de alimento.
+      <b>Distâncias:</b> o participante informa o município de origem e a organização lança a distância rodoviária
+      depois, na consolidação.
     </p>
   </div>
 </section>
@@ -217,7 +224,7 @@
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Protótipo de validação v2.0, 01/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
+      © 2026 AEFOS · Protótipo de validação v2.1, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
     </div>
   </div>
 </footer>
@@ -227,29 +234,15 @@
 
 /* ---------- fatores ---------- */
 var F = {
-  gasolina:{fos:1.658, bio:0.408, nome:"gasolina C"},
-  etanol:  {fos:0.020, bio:1.546, nome:"etanol hidratado"},
-  diesel:  {fos:2.310, bio:0.230, nome:"diesel B"},
-  sin:0.027, onibusLinha:0.035, diaria:10.0, refeicao:1.50, coffee:0.50,
+  gasolina:{fos:1.545, bio:0.484, nome:"gasolina C (E32)"},
+  etanol:  {fos:0.057, bio:1.546, nome:"etanol hidratado"},
+  diesel:  {fos:2.275, bio:0.252, nome:"diesel B (B15)"},
+  sin:0.027, onibusLinha:0.028, diaria:8.7, coffee:1.27,
   arvore:140, replantio:1.20, rPadraoCarro:10, rPadraoMoto:30
 };
 
-/* ---------- distancias rodoviarias preliminares (km, percurso simples) ---------- */
-var MUN = [
-  ["Pato Branco",8,75],["Dois Vizinhos",75,5],["Francisco Beltrão",50,50],
-  ["Itapejara d'Oeste",30,45],["Coronel Vivida",35,85],["Chopinzinho",55,70],
-  ["Mariópolis",20,90],["Vitorino",20,65],["Renascença",30,55],["São João",45,55],
-  ["Verê",65,35],["São Jorge d'Oeste",55,25],["Salto do Lontra",65,20],
-  ["Nova Prata do Iguaçu",90,35],["Boa Esperança do Iguaçu",80,25],
-  ["Cruzeiro do Iguaçu",80,25],["Enéas Marques",60,40],["Marmeleiro",60,65],
-  ["Clevelândia",45,110],["Palmas",90,155],["Realeza",90,75],["Ampére",90,80],
-  ["Capanema",130,110],["Pranchita",120,100],["Santo Antônio do Sudoeste",130,115],
-  ["Barracão",140,125],["Cascavel",160,110],["Toledo",190,150],["Foz do Iguaçu",230,190],
-  ["Guarapuava",180,230],["União da Vitória",190,250],["Curitiba",430,500]
-].sort(function(a,b){return a[0].localeCompare(b[0],"pt");});
-
 var MODULOS = [
-  {id:"m1",rot:"Módulo 1 · 05 a 07/10",sub:"UTFPR Dois Vizinhos, presencial",online:false,sede:2},
+  {id:"m1",rot:"Módulo 1 · 05 a 07/10",sub:"UTFPR Dois Vizinhos, presencial. Responda uma vez por dia",online:false,sede:2},
   {id:"m2",rot:"Módulo 2 · 08/10",sub:"Crédito profissional, on-line",online:true},
   {id:"m3",rot:"Módulo 3 · 20/10",sub:"Dendrologia teórica, on-line",online:true},
   {id:"m4",rot:"Módulo 4 · 24/10",sub:"Dendrologia de campo, Pato Branco",online:false,sede:1},
@@ -269,13 +262,13 @@ function steps(){
   if(S.modal==="carro"||S.modal==="moto"){ L.push({k:"ocupantes"},{k:"combustivel"},{k:"rendimento"}); }
   if(S.modal && S.modal!=="fretado"){ L.push({k:"retorno"}); }
   if(S.retorno==="nao"){ L.push({k:"diarias"}); }
-  L.push({k:"refeicoes"});
+  L.push({k:"coffee"});
   return L;
 }
 
 function calcular(){
   var t=[], mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
-  var fossil=0, bio=0, linhas=[];
+  var fossil=0, bio=0, linhas=[], pend=false, porKm=0;
   function add(s){ t.push(s); }
 
   add("MODULO    " + mod.rot.replace(" · ","  "));
@@ -293,16 +286,13 @@ function calcular(){
     fossil+=kg; linhas.push(["Energia do aparelho",kg]);
   } else {
     var sede = mod.sede===1 ? "Pato Branco" : "Dois Vizinhos";
-    var row  = MUN.filter(function(m){return m[0]===S.municipio;})[0];
-    var dIda = mod.sede===1 ? row[1] : row[2];
     var k = S.retorno==="sim" ? 2 : 1;
-    var D = dIda*k;
+    var dIda = (S.distSim>0) ? S.distSim : null;
+    var D = dIda===null ? null : dIda*k;
 
     add("DESLOCAMENTO");
-    add("  origem   = "+S.municipio);
+    add("  origem   = "+S.municipio+"   [informado pelo participante]");
     add("  destino  = "+sede);
-    add("  d_ida    = "+dIda+" km        k = "+k+(k===2?"  (retorna no dia)":"  (pernoita)"));
-    add("  D = "+dIda+" x "+k+"  = "+D+" km");
 
     if(S.modal==="pe"){
       add("  a pe ou bicicleta  ->  E = 0");
@@ -315,53 +305,71 @@ function calcular(){
       add("  lancado na camada B, em litros de diesel da transportadora");
       add("  nao atribuido ao participante nesta camada  ->  E = 0");
       linhas.push(["Deslocamento",0]);
-    } else if(S.modal==="linha"){
-      var kgL = D*F.onibusLinha;
-      add("  E = "+D+" x "+F.onibusLinha+" kgCO2e/pass.km");
-      add("                      = "+kgL.toFixed(2)+" kg   [fator provisorio]");
-      fossil+=kgL; linhas.push(["Deslocamento, ônibus de linha",kgL]);
     } else {
-      var comb = F[S.combustivel], n = Number(S.ocupantes);
-      var padrao = S.rendimento==="padrao";
-      var r = padrao ? (S.modal==="moto"?F.rPadraoMoto:F.rPadraoCarro) : Number(S.rendimento);
-      var L = D/r, ef = L*comb.fos/n, eb = L*comb.bio/n;
-      add("  combustivel = "+comb.nome);
-      add("  r = "+r.toLocaleString("pt-BR")+" km/L"+(padrao?"   [premissa: valor padrao]":"   [declarado]"));
-      add("  n = "+n+" ocupante"+(n>1?"s":""));
-      add("  L = "+D+" / "+r+"  = "+L.toFixed(3)+" L");
-      add("");
-      add("  E   = ( "+L.toFixed(3)+" x "+comb.fos.toFixed(3)+" ) / "+n);
-      add("      = "+(L*comb.fos).toFixed(2)+" / "+n+"  = "+ef.toFixed(2)+" kgCO2e");
-      add("  Bio = ( "+L.toFixed(3)+" x "+comb.bio.toFixed(3)+" ) / "+n);
-      add("      = "+(L*comb.bio).toFixed(2)+" / "+n+"  = "+eb.toFixed(2)+" kgCO2 biogenico");
-      fossil+=ef; bio+=eb; linhas.push(["Deslocamento",ef]);
+      add("  k = "+k+(k===2?"  (retorna no dia)":"  (pernoita)"));
+      if(D===null){
+        add("  d_ida    = a lancar pela organizacao, na consolidacao");
+        add("  D = d_ida x "+k);
+      } else {
+        add("  d_ida    = "+dIda+" km   [distancia simulada]");
+        add("  D = "+dIda+" x "+k+"  = "+D+" km");
+      }
+      if(S.modal==="linha"){
+        porKm = F.onibusLinha;
+        add("  E = D x "+F.onibusLinha+" kgCO2e/pass.km   [DEFRA 2025, onibus rodoviario]");
+        if(D!==null){
+          var kgL = D*F.onibusLinha;
+          add("                      = "+kgL.toFixed(2)+" kg");
+          fossil+=kgL; linhas.push(["Deslocamento, ônibus de linha",kgL]);
+        } else { pend=true; linhas.push(["Deslocamento, ônibus de linha",null]); }
+      } else {
+        var comb = F[S.combustivel], n = Number(S.ocupantes);
+        var padrao = S.rendimento==="padrao";
+        var r = padrao ? (S.modal==="moto"?F.rPadraoMoto:F.rPadraoCarro) : Number(S.rendimento);
+        porKm = comb.fos/r/n;
+        add("  combustivel = "+comb.nome);
+        add("  r = "+r.toLocaleString("pt-BR")+" km/L"+(padrao?"   [premissa: valor padrao]":"   [declarado]"));
+        add("  n = "+n+" ocupante"+(n>1?"s":""));
+        add("");
+        add("  E   = ( D / r ) x "+comb.fos.toFixed(3)+" / n");
+        add("  Bio = ( D / r ) x "+comb.bio.toFixed(3)+" / n");
+        add("  por km:  E = "+porKm.toFixed(4)+" kgCO2e/km    Bio = "+(comb.bio/r/n).toFixed(4)+" kgCO2/km");
+        if(D!==null){
+          var L = D/r, ef = L*comb.fos/n, eb = L*comb.bio/n;
+          add("");
+          add("  L = "+D+" / "+r+"  = "+L.toFixed(3)+" L");
+          add("  E   = ( "+L.toFixed(3)+" x "+comb.fos.toFixed(3)+" ) / "+n+"  = "+ef.toFixed(2)+" kgCO2e");
+          add("  Bio = ( "+L.toFixed(3)+" x "+comb.bio.toFixed(3)+" ) / "+n+"  = "+eb.toFixed(2)+" kgCO2 biogenico");
+          fossil+=ef; bio+=eb; linhas.push(["Deslocamento",ef]);
+        } else { pend=true; linhas.push(["Deslocamento",null]); }
+      }
     }
 
     if(S.retorno==="nao"){
       var hd = Number(S.diarias), kgH = hd*F.diaria;
       add(""); add("HOSPEDAGEM");
-      add("  E = "+hd+" diaria"+(hd>1?"s":"")+" x "+F.diaria.toFixed(1)+"  = "+kgH.toFixed(2)+" kg   [fator provisorio]");
+      add("  E = "+hd+" diaria"+(hd>1?"s":"")+" x "+F.diaria.toFixed(1)+"  = "+kgH.toFixed(2)+" kg   [DEFRA 2024, Brasil]");
       fossil+=kgH; linhas.push(["Hospedagem",kgH]);
     }
 
-    var ref = {nenhuma:[0,0],coffee:[0,1],uma:[1,1],duas:[2,1]}[S.refeicoes];
-    var kgR = ref[0]*F.refeicao + ref[1]*F.coffee;
-    add(""); add("ALIMENTACAO");
-    add("  "+ref[0]+" refeicao(oes) x "+F.refeicao.toFixed(2)+"  +  "+ref[1]+" coffee x "+F.coffee.toFixed(2));
-    add("                      = "+kgR.toFixed(2)+" kg   [fatores provisorios]");
-    fossil+=kgR; linhas.push(["Alimentação",kgR]);
+    var nc = Number(S.coffee), kgR = nc*F.coffee;
+    add(""); add("COFFEE BREAK");
+    add("  E = "+nc+" x "+F.coffee.toFixed(2)+"  = "+kgR.toFixed(2)+" kg   [Poore e Nemecek 2018, porcao padrao]");
+    fossil+=kgR; linhas.push(["Coffee break",kgR]);
   }
 
   var mudas = fossil/1000*(1000/F.arvore)*F.replantio;
-  add(""); add("TOTAL");
-  add("  antropico            = "+fossil.toFixed(2)+" kgCO2e");
-  add("  biogenico (apartado) = "+bio.toFixed(2)+" kgCO2");
-  add("");
-  add("MUDAS EQUIVALENTES");
-  add("  N = ("+fossil.toFixed(2)+" / 1000) x (1000 / "+F.arvore+") x "+F.replantio.toFixed(2));
-  add("    = "+mudas.toFixed(3)+" muda(s)");
+  add(""); add(pend ? "TOTAL PARCIAL (sem deslocamento)" : "TOTAL");
+  add("  antropico            = "+fossil.toFixed(2)+" kgCO2e"+(pend?"  + deslocamento":""));
+  add("  biogenico (apartado) = "+bio.toFixed(2)+" kgCO2"+(pend?"  + deslocamento":""));
+  if(!pend){
+    add("");
+    add("MUDAS EQUIVALENTES");
+    add("  N = ("+fossil.toFixed(2)+" / 1000) x (1000 / "+F.arvore+") x "+F.replantio.toFixed(2));
+    add("    = "+mudas.toFixed(3)+" muda(s)");
+  }
 
-  return {fossil:fossil,bio:bio,mudas:mudas,linhas:linhas,trace:t.join("\n")};
+  return {fossil:fossil,bio:bio,mudas:mudas,linhas:linhas,pend:pend,porKm:porKm,sede:(mod.online?"":(mod.sede===1?"Pato Branco":"Dois Vizinhos")),trace:t.join("\n")};
 }
 
 function nb(n){ return n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -406,26 +414,27 @@ function render(){
   }
   else if(k==="municipio"){
     var el=$("screen"); el.innerHTML="";
-    var h=document.createElement("div"); h.className="q"; h.textContent="De onde você saiu hoje?";
+    var h=document.createElement("div"); h.className="q"; h.textContent="De qual município você saiu hoje?";
     var d=document.createElement("div"); d.className="qhint";
-    d.textContent="A distância rodoviária até "+(mod.sede===1?"Pato Branco":"Dois Vizinhos")+" vem de tabela pré-carregada. Não é preciso informar quilometragem.";
+    d.textContent="Digite o município e o estado. A distância até "+(mod.sede===1?"Pato Branco":"Dois Vizinhos")+" é lançada depois pela organização. Não é preciso informar quilometragem.";
     el.appendChild(h); el.appendChild(d);
     var f=document.createElement("div"); f.className="field";
-    var sel=document.createElement("select"); sel.id="selMun";
-    sel.appendChild(new Option("Selecione o município",""));
-    MUN.forEach(function(m){ sel.appendChild(new Option(m[0]+"  ("+(mod.sede===1?m[1]:m[2])+" km)",m[0])); });
+    var inp=document.createElement("input"); inp.type="text"; inp.id="inpMun"; inp.maxLength=60;
+    inp.placeholder="Ex.: Francisco Beltrão, PR"; inp.autocomplete="address-level2"; inp.value=S.municipio||"";
     var b=document.createElement("button"); b.className="btn"; b.type="button"; b.textContent="Continuar";
-    b.addEventListener("click",function(){ if(sel.value) set("municipio",sel.value); });
-    f.appendChild(sel); f.appendChild(b); el.appendChild(f);
+    var go=function(){ var v=inp.value.trim().replace(/\s+/g," "); if(v.length>=3){ S.distSim=null; set("municipio",v); } else { inp.focus(); } };
+    b.addEventListener("click",go);
+    inp.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); });
+    f.appendChild(inp); f.appendChild(b); el.appendChild(f);
   }
   else if(k==="modal"){
     ask("Como você veio hoje?",null,[
-      opt("Carro","Próprio ou carona",function(){set("modal","carro");}),
+      opt("Carro","Próprio ou carona. Híbrido entra aqui",function(){set("modal","carro");}),
       opt("Motocicleta",null,function(){set("modal","moto");}),
       opt("Ônibus de linha",null,function(){set("modal","linha");}),
       opt("Ônibus fretado pelo evento","Lançado pela organização, não por você",function(){set("modal","fretado");}),
       opt("A pé ou de bicicleta",null,function(){set("modal","pe");}),
-      opt("Veículo elétrico ou híbrido",null,function(){set("modal","eletrico");})
+      opt("Veículo elétrico","Somente 100% elétrico",function(){set("modal","eletrico");})
     ]);
   }
   else if(k==="ocupantes"){
@@ -468,12 +477,11 @@ function render(){
     ask("Quantas diárias em hotel ou pousada?",null,
       [1,2,3].map(function(n){ return opt(n+(n>1?" diárias":" diária"),null,function(){set("diarias",n);}); }));
   }
-  else if(k==="refeicoes"){
-    ask("Refeições por conta do evento hoje",null,[
-      opt("Nenhuma",null,function(){set("refeicoes","nenhuma");}),
-      opt("Só o coffee break",null,function(){set("refeicoes","coffee");}),
-      opt("Uma refeição e coffee",null,function(){set("refeicoes","uma");}),
-      opt("Duas refeições e coffee",null,function(){set("refeicoes","duas");})
+  else if(k==="coffee"){
+    ask("Você participou de coffee break do evento hoje?",null,[
+      opt("Não teve coffee break",null,function(){set("coffee",0);}),
+      opt("Um coffee break",null,function(){set("coffee",1);}),
+      opt("Dois coffee breaks",null,function(){set("coffee",2);})
     ]);
   }
   else if(k==="aparelho"){
@@ -496,25 +504,46 @@ function render(){
 function resultado(){
   var r=calcular(), el=$("screen"); el.innerHTML="";
 
-  var h=document.createElement("div"); h.className="q"; h.textContent="Sua emissão neste módulo"; el.appendChild(h);
+  var h=document.createElement("div"); h.className="q";
+  h.textContent = r.pend ? "Sua emissão neste módulo, sem o deslocamento" : "Sua emissão neste módulo"; el.appendChild(h);
 
   var tot=document.createElement("div"); tot.className="total";
-  tot.innerHTML='<span class="n">'+nb(r.fossil)+'</span><span class="u">kg CO₂e</span>';
+  tot.innerHTML='<span class="n">'+nb(r.fossil)+'</span><span class="u">kg CO₂e'+(r.pend?' + deslocamento':'')+'</span>';
   el.appendChild(tot);
 
   var html="";
-  r.linhas.forEach(function(x){ html+="<tr><td>"+x[0]+"</td><td>"+nb(x[1])+" kg</td></tr>"; });
-  html+='<tr class="sum"><td>Total antrópico</td><td>'+nb(r.fossil)+' kg</td></tr>';
-  html+='<tr class="bio"><td>CO₂ biogênico, fora do total</td><td>'+nb(r.bio)+' kg</td></tr>';
+  r.linhas.forEach(function(x){ html+="<tr><td>"+x[0]+"</td><td>"+(x[1]===null?"a calcular":nb(x[1])+" kg")+"</td></tr>"; });
+  html+='<tr class="sum"><td>'+(r.pend?"Total parcial":"Total antrópico")+'</td><td>'+nb(r.fossil)+' kg</td></tr>';
+  html+='<tr class="bio"><td>CO₂ biogênico, fora do total</td><td>'+(r.pend?"a calcular":nb(r.bio)+" kg")+'</td></tr>';
   var tb=document.createElement("table"); tb.className="brk"; tb.innerHTML="<tbody>"+html+"</tbody>";
   el.appendChild(tb);
 
-  var m=document.createElement("div"); m.className="mudas";
-  m.innerHTML='<span class="n">'+r.mudas.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+
-    ' muda'+(r.mudas>=2?'s':'')+'</span>'+
-    '<p>Equivalente da sua participação, considerando sequestro de 140 kgCO₂e por árvore ao longo de 20 anos e 20% '+
-    'de reposição por mortalidade. O sequestro é projetado para duas décadas, não é imediato.</p>';
-  el.appendChild(m);
+  if(r.pend || S.distSim>0){
+    var p=document.createElement("div"); p.className="pend";
+    var t1=document.createElement("div");
+    t1.innerHTML = r.pend
+      ? "<b>Deslocamento a calcular.</b> A distância rodoviária entre a origem informada e "+r.sede+" será lançada pela organização. Cada quilômetro rodado corresponde a <b>"+r.porKm.toLocaleString("pt-BR",{minimumFractionDigits:3,maximumFractionDigits:3})+" kg CO₂e</b> para você."
+      : "<b>Distância simulada: "+S.distSim.toLocaleString("pt-BR")+" km de ida.</b> Valor apenas para conferência do cálculo.";
+    p.appendChild(t1);
+    var f=document.createElement("div"); f.className="field";
+    var i=document.createElement("input"); i.type="number"; i.id="inpSim"; i.min="1"; i.max="3000"; i.step="1";
+    i.placeholder="Simular distância de ida, em km";
+    var b=document.createElement("button"); b.className="btn"; b.type="button"; b.textContent="Simular";
+    var go=function(){ var v=parseFloat(i.value); if(v>0&&v<=3000){ S.distSim=v; resultado(); } else { i.focus(); } };
+    b.addEventListener("click",go);
+    i.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); });
+    f.appendChild(i); f.appendChild(b); p.appendChild(f);
+    el.appendChild(p);
+  }
+
+  if(!r.pend){
+    var m=document.createElement("div"); m.className="mudas";
+    m.innerHTML='<span class="n">'+r.mudas.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+
+      ' muda'+(r.mudas>=2?'s':'')+'</span>'+
+      '<p>Equivalente da sua participação, considerando sequestro de 140 kgCO₂e por árvore ao longo de 20 anos e 20% '+
+      'de reposição por mortalidade. O sequestro é projetado para duas décadas, não é imediato.</p>';
+    el.appendChild(m);
+  }
 
   var det=document.createElement("details"); det.className="audit"; det.open=true;
   var sum=document.createElement("summary"); sum.textContent="Memória de cálculo";
