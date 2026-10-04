@@ -179,7 +179,7 @@
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Versão 3.2, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
+      © 2026 AEFOS · Versão 3.3, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
     </div>
   </div>
 </footer>
@@ -208,7 +208,7 @@ var MODULOS = [
 /* ---------- gravacao das respostas ---------- */
 /* Cole entre as aspas o endereco do Web App do Google Apps Script (termina em /exec). */
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbwUTBbHM9fRuUN6L6SzVo_W-hy0ER-yUPS1_SuapZ9y19UbXrrCw6K-5_AsB4brg5YefQ/exec";
-var VERSAO = "3.2";
+var VERSAO = "3.3";
 var FILA = "aefos_pegada_fila";
 
 function lerFila(){ try{ return JSON.parse(localStorage.getItem(FILA)||"[]"); }catch(e){ return []; } }
@@ -259,6 +259,10 @@ function telaJaRespondeu(){
   p.textContent="Cada pessoa responde uma vez por dia. Se você participar de outro dia do Circuito, responda de novo nesse dia. As emissões do Circuito serão compensadas com o plantio de mudas nativas, em um evento posterior.";
   el.appendChild(p);
 }
+
+/* ---------- a gravacao comeca no primeiro dia do Circuito ---------- */
+var INICIO = "2026-10-05";
+function gravacaoAtiva(){ return hoje() >= INICIO; }
 
 var S = {}, idx = 0;
 function $(id){ return document.getElementById(id); }
@@ -555,7 +559,7 @@ function render(){
 function resultado(){
   var el=$("screen"); el.innerHTML="";
   var mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
-  if(!S.enviado){ S.enviado=true; try{ enviar(montarResposta()); }catch(e){} marcarRespondido(); }
+  if(!S.enviado){ S.enviado=true; if(gravacaoAtiva()){ try{ enviar(montarResposta()); }catch(e){} marcarRespondido(); } }
   var qual = mod.rot.split(" · ")[0] + (S.dia ? ", dia "+S.dia.split(",")[0] : "");
 
   var h=document.createElement("div"); h.className="q"; h.textContent="Obrigado pela participação"+(S.nome?", "+S.nome.split(" ")[0]:"")+"!"; el.appendChild(h);
@@ -563,14 +567,19 @@ function resultado(){
   p.textContent="Sua resposta do "+qual+" foi concluída. As emissões do Circuito serão compensadas com o plantio de mudas nativas, em um evento posterior. Você será avisado da data pelo e-mail ou pelo WhatsApp informado.";
   el.appendChild(p);
 
+  if(!gravacaoAtiva()){
+    var av=document.createElement("div"); av.className="erro";
+    av.textContent="Modo de teste: esta resposta não foi gravada. A gravação começa em 05/10/2026.";
+    el.appendChild(av);
+  }
   $("navRow").hidden = true;
   $("prog").hidden = true;
 }
 
 $("back").addEventListener("click",function(){ if(idx>0){ idx--; render(); } });
 $("restart").addEventListener("click",function(){ S={}; idx=0; render(); });
-reenviarFila();
-if(jaRespondeuHoje()){ telaJaRespondeu(); } else { render(); }
+if(gravacaoAtiva()){ reenviarFila(); }
+if(gravacaoAtiva() && jaRespondeuHoje()){ telaJaRespondeu(); } else { render(); }
 </script>
 </body>
 </html>
