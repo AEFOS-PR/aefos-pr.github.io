@@ -1,0 +1,39 @@
+/* Calculadora de pegada do 1o Circuito AEFOS: gravacao das respostas.
+   Colar em Extensoes > Apps Script, dentro da planilha que vai receber os dados. */
+
+var ABA = "Respostas";
+var COLUNAS = ["recebido_em","id","versao","nome","email","whatsapp","consentimento","modulo","dia","municipio","modal",
+  "ocupantes","combustivel","rendimento_km_l","volta_no_dia","diarias","aparelho","horas_online",
+  "trechos","kg_por_km","bio_por_km","kg_sem_deslocamento"];
+
+function doPost(e) {
+  var trava = LockService.getScriptLock();
+  trava.waitLock(20000);
+  try {
+    var d = JSON.parse(e.postData.contents);
+    var planilha = SpreadsheetApp.getActiveSpreadsheet();
+    var aba = planilha.getSheetByName(ABA) || planilha.insertSheet(ABA);
+    if (aba.getLastRow() === 0) {
+      aba.appendRow(COLUNAS);
+      aba.setFrozenRows(1);
+    }
+    var linha = COLUNAS.map(function (c) {
+      if (c === "recebido_em") return new Date();
+      var v = d[c];
+      if (v === undefined || v === null) return "";
+      if (typeof v === "string") {
+        v = v.slice(0, 200);
+        if (/^[=+\-@]/.test(v)) v = "'" + v;   // impede que um texto vire formula
+      }
+      return v;
+    });
+    aba.appendRow(linha);
+    return ContentService.createTextOutput("ok");
+  } finally {
+    trava.releaseLock();
+  }
+}
+
+function doGet() {
+  return ContentService.createTextOutput("AEFOS pegada: gravacao ativa");
+}

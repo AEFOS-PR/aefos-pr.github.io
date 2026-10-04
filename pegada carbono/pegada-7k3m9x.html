@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Pegada de carbono do Circuito | Validação técnica | AEFOS</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<style>
+  :root{
+    --forest-950:#0b2418;--forest-900:#0f3020;--forest-800:#16482c;--forest-700:#1b6b3a;
+    --forest-600:#218049;--forest-500:#2e9e5b;--forest-400:#4bbd78;--forest-300:#8bd6a6;--forest-100:#e6f3ea;
+    --amber:#d98a00;--amber-soft:#f6e3bd;--amber-ink:#8a5a00;
+    --ink:#122318;--ink-2:#41544a;--muted:#77887d;
+    --page:#f4f8f4;--surface:#ffffff;--line:#e3ece5;
+    --ring:rgba(16,36,26,.09);--shadow:0 1px 2px rgba(16,36,26,.05),0 10px 30px rgba(16,36,26,.07);
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--page);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:860px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;gap:20px}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+  .nav-logo img{height:40px}
+  .nav-logo b{font-size:17px;font-weight:800;letter-spacing:.3px;color:var(--forest-700)}
+  .nav-tag{margin-left:auto;font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    background:var(--amber-soft);color:var(--amber-ink);padding:6px 11px;border-radius:999px}
+  @media(max-width:560px){.nav-logo b{display:none}.nav-tag{font-size:11px;padding:5px 9px}}
+
+  .hero{color:#fff;background:radial-gradient(900px 500px at 15% -20%,#1c5e39 0%,#0f3020 55%,#0b2418 100%)}
+  .hero .wrap{padding:44px 24px 48px}
+  .hero .kick{font-size:12.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--forest-300)}
+  .hero h1{font-size:clamp(26px,4.6vw,40px);font-weight:800;letter-spacing:-1px;line-height:1.08;max-width:20ch;margin-top:8px}
+  .hero p{font-size:clamp(14.5px,2vw,17px);color:#d7e8dc;margin-top:18px;max-width:62ch}
+  .hero .warn{margin-top:22px;background:rgba(217,138,0,.16);border:1px solid rgba(217,138,0,.45);
+    border-radius:12px;padding:13px 17px;font-size:14.5px;color:#f3dfb8}
+  .hero .warn b{color:#ffd27a}
+
+  section.block{padding:44px 0}
+  section.block.alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .kicker{font-size:12.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--forest-600)}
+  h2.sec{font-size:clamp(21px,3vw,28px);font-weight:800;letter-spacing:-.4px;margin:8px 0 10px}
+  .sec-lead{font-size:15.5px;color:var(--ink-2);max-width:68ch}
+
+  .card{background:var(--surface);border:1px solid var(--ring);border-radius:18px;box-shadow:var(--shadow);padding:26px}
+  section.block.alt .card{border-color:var(--line)}
+
+  .prog{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .prog-track{flex:1;min-width:0;height:6px;background:var(--forest-100);border-radius:4px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--forest-600);width:0;transition:width .28s ease}
+  .prog-txt{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+
+  .q{font-size:20px;font-weight:800;letter-spacing:-.3px;line-height:1.3}
+  .qhint{font-size:14px;color:var(--ink-2);margin-top:6px}
+  .opts{display:grid;gap:9px;margin-top:16px}
+  button.opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;font-weight:600;color:var(--ink);
+    background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:13px 16px;cursor:pointer;
+    transition:border-color .12s,background .12s,transform .1s}
+  button.opt:hover{border-color:var(--forest-400);background:var(--forest-100);transform:translateY(-1px)}
+  button.opt .sub{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
+  button.opt:focus-visible,input:focus-visible,select:focus-visible,.btn:focus-visible,.link:focus-visible{outline:2px solid var(--forest-600);outline-offset:2px}
+
+  .field{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+  input[type=number],select{font:inherit;font-size:15px;padding:12px 13px;border:1px solid var(--ring);
+    border-radius:11px;background:var(--surface);color:var(--ink);min-width:0;flex:1}
+  .btn{display:inline-flex;align-items:center;font:inherit;font-weight:700;font-size:15px;border:0;
+    padding:12px 22px;border-radius:11px;cursor:pointer;background:var(--forest-600);color:#fff;transition:transform .1s}
+  .btn:hover{transform:translateY(-1px);background:var(--forest-700)}
+  .nav-row{display:flex;gap:16px;align-items:center;margin-top:18px;flex-wrap:wrap}
+  .link{background:none;border:0;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+    text-decoration:underline;text-underline-offset:3px;padding:0}
+  .link:hover{color:var(--forest-700)}
+
+  .total{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .total .n{font-family:var(--mono);font-size:clamp(34px,8vw,46px);font-weight:600;line-height:1;
+    color:var(--forest-700);font-variant-numeric:tabular-nums}
+  .total .u{font-size:16px;font-weight:700;color:var(--ink-2)}
+  table.brk{width:100%;border-collapse:collapse;margin-top:18px;font-size:14.5px}
+  table.brk td{padding:9px 0;border-bottom:1px solid var(--line)}
+  table.brk td:last-child{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.brk tr:last-child td{border-bottom:0}
+  table.brk .sum td{font-weight:800;border-top:2px solid var(--forest-600);border-bottom:0;padding-top:11px}
+  table.brk .bio td{color:var(--muted);font-style:italic}
+
+  .mudas{margin-top:20px;background:var(--forest-100);border:1px solid var(--forest-300);border-radius:14px;padding:18px 20px}
+  .mudas .n{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--forest-700)}
+  .mudas p{margin-top:6px;font-size:13.5px;color:var(--ink-2)}
+
+  details.audit{margin-top:18px;border:1px solid var(--ring);border-radius:12px;overflow:hidden;background:#fbfdfb}
+  details.audit > summary{cursor:pointer;padding:13px 16px;font-weight:800;font-size:14.5px;background:var(--forest-100);
+    color:var(--forest-800);list-style:none}
+  details.audit > summary::-webkit-details-marker{display:none}
+  details.audit > summary::before{content:"▸ "}
+  details.audit[open] > summary::before{content:"▾ "}
+  .audit-body{overflow-x:auto;padding:6px 0 12px}
+  pre.trace{font-family:var(--mono);font-size:12.5px;line-height:1.75;margin:0;padding:12px 16px;white-space:pre}
+
+  .scroller{overflow-x:auto;margin-top:16px}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+  table.tbl th{text-align:left;background:var(--forest-700);color:#fff;font-weight:700;padding:10px 12px;font-size:12.5px;letter-spacing:.3px}
+  table.tbl td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.tbl tr:last-child td{border-bottom:0}
+  table.tbl .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .prov{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    color:var(--amber-ink);background:var(--amber-soft);padding:3px 8px;border-radius:999px}
+  input[type=text]{font:inherit;font-size:15px;padding:12px 13px;border:1px solid var(--ring);border-radius:11px;background:var(--surface);color:var(--ink);min-width:0;flex:1}
+  .fim{margin-top:18px;font-size:14.5px;color:var(--ink-2);background:var(--forest-100);border-radius:12px;padding:14px 16px}
+  .note{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:72ch}
+  .ponto{margin-top:16px;font-size:15px;color:var(--ink-2)}
+  .ponto b{color:var(--ink)}
+
+  footer.site{background:var(--forest-950);color:#c8d8ce;padding:40px 0 26px}
+  footer.site img{height:50px;background:#fff;border-radius:12px;padding:7px 10px}
+  footer.site p{margin-top:14px;max-width:46ch;font-size:13.5px;color:#a9c3b3}
+  .foot-bot{border-top:1px solid rgba(255,255,255,.12);margin-top:26px;padding-top:18px;font-size:12.5px;color:#8fa295}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html"><img src="../assets/logo.png" alt="AEFOS"><b>AEFOS</b></a>
+    <span class="nav-tag">Documento de trabalho</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kick">1º Circuito de Capacitação Técnica Florestal</div>
+    <h1>Pegada de carbono do Circuito</h1>
+    <p>
+      Instrumento de coleta e cálculo das emissões de gases de efeito estufa do Circuito, de 05/10 a 14/11/2026,
+      base para o dimensionamento do plantio compensatório de mudas nativas.
+    </p>
+    <div class="warn">
+      <b>Protótipo em validação.</b> Esta página não consta do menu do site e não é indexada por buscadores.
+      O acesso é por link direto. Nenhuma resposta é gravada ou transmitida: todo o cálculo roda no seu navegador.
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="card" id="app">
+      <div class="prog" id="prog" hidden>
+        <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+        <span class="prog-txt" id="progTxt"></span>
+      </div>
+      <div id="screen"></div>
+      <div class="nav-row" id="navRow" hidden>
+        <button class="link" id="back" type="button">Voltar</button>
+        <button class="link" id="restart" type="button">Recomeçar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="kicker">Parâmetros</div>
+    <h2 class="sec">Fatores de emissão aplicados</h2>
+    <p class="sec-lead">
+      Fatores fixos, com a referência de cada um. Os de combustível derivam dos parâmetros do IPCC 2006
+      (fator de emissão e poder calorífico) e das densidades correntes, com separação da fração biogênica das
+      misturas obrigatórias de etanol anidro e biodiesel.
+    </p>
+    <div class="scroller">
+      <table class="tbl">
+        <thead><tr><th>Fonte de emissão</th><th>Fator</th><th>Biogênico</th><th>Referência</th></tr></thead>
+        <tbody>
+          <tr><td>Gasolina C (E32)</td><td class="mono">1,545 kgCO₂/L</td><td class="mono">0,484 kgCO₂/L</td><td>IPCC 2006, mistura vigente desde 01/08/2026</td></tr>
+          <tr><td>Diesel B (B15)</td><td class="mono">2,275 kgCO₂/L</td><td class="mono">0,252 kgCO₂/L</td><td>IPCC 2006, mistura vigente desde 01/08/2025</td></tr>
+          <tr><td>Etanol hidratado (CH₄ e N₂O)</td><td class="mono">0,057 kgCO₂e/L</td><td class="mono">1,546 kgCO₂/L</td><td>IPCC 2006, v. 2, tab. 3.2.2; GWP do AR6</td></tr>
+          <tr><td>Energia elétrica, SIN</td><td class="mono">0,027 tCO₂/MWh</td><td class="mono"></td><td>MCTI, fator médio para inventários</td></tr>
+          <tr><td>Ônibus de linha</td><td class="mono">0,028 kgCO₂e/pass·km</td><td class="mono"></td><td>DESNZ/DEFRA 2025, ônibus rodoviário</td></tr>
+          <tr><td>Hospedagem</td><td class="mono">8,7 kgCO₂e/diária</td><td class="mono"></td><td>DESNZ/DEFRA 2024, hotel no Brasil</td></tr>
+          <tr><td>Coffee break</td><td class="mono">1,27 kgCO₂e</td><td class="mono"></td><td>Poore e Nemecek (2018), porção padrão</td></tr>
+          <tr><td>Sequestro por árvore, 20 anos</td><td class="mono">140 kgCO₂e</td><td class="mono"></td><td>Totum / ESALQ / SOS Mata Atlântica</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      <b>Etanol hidratado:</b> CH₄ de 18 kg/TJ (carros a etanol, Brasil) e N₂O de 8,0 kg/TJ (valor da gasolina com
+      catalisador, adotado por não haver valor próprio para etanol), sobre 21,34 MJ/L, com GWP de 27 e 273.
+      <b>Coffee break:</b> porção padrão por pessoa de 10 g de café, 50 mL de leite, 200 mL de suco de laranja,
+      100 g de pão ou bolo e 20 g de queijo, com os fatores médios globais por quilo de alimento.
+      <b>Distâncias:</b> o participante informa só o município de origem. Na consolidação, a organização aplica
+      uma distância rodoviária média para cada município informado.
+    </p>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <img src="../assets/logo.png" alt="AEFOS">
+    <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
+    <div class="foot-bot">
+      © 2026 AEFOS · Protótipo de validação v2.5, 02/10/2026 · Cálculo executado no navegador, sem transmissão de dados.
+    </div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ---------- fatores ---------- */
+var F = {
+  gasolina:{fos:1.545, bio:0.484, nome:"gasolina C (E32)"},
+  etanol:  {fos:0.057, bio:1.546, nome:"etanol hidratado"},
+  diesel:  {fos:2.275, bio:0.252, nome:"diesel B (B15)"},
+  sin:0.027, onibusLinha:0.028, diaria:8.7, coffee:1.27,
+  arvore:140, replantio:1.20, rPadraoCarro:10, rPadraoMoto:30
+};
+
+var MODULOS = [
+  {id:"m1",rot:"Módulo 1 · 05 a 07/10",sub:"UTFPR Dois Vizinhos, presencial",online:false,sede:2,dias:["05/10, segunda-feira","06/10, terça-feira","07/10, quarta-feira"]},
+  {id:"m2",rot:"Módulo 2 · 08/10",sub:"Crédito profissional, on-line",online:true},
+  {id:"m3",rot:"Módulo 3 · 20/10",sub:"Dendrologia teórica, on-line",online:true},
+  {id:"m4",rot:"Módulo 4 · 24/10",sub:"Dendrologia de campo, Pato Branco",online:false,sede:1},
+  {id:"m5",rot:"Módulo 5 · 24/10",sub:"Prosa Florestal, Pato Branco",online:false,sede:1},
+  {id:"m6",rot:"Módulo 6 · 14/11",sub:"IA na engenharia, UTFPR Dois Vizinhos",online:false,sede:2}
+];
+
+var S = {}, idx = 0;
+function $(id){ return document.getElementById(id); }
+
+function steps(){
+  var L = [{k:"modulo"}];
+  var mod = MODULOS.filter(function(m){return m.id===S.modulo;})[0];
+  if(!mod) return L;
+  if(mod.dias){ L.push({k:"dia"}); }
+  if(mod.online){ L.push({k:"aparelho"},{k:"tempo"}); return L; }
+  L.push({k:"municipio"},{k:"modal"});
+  if(S.modal==="carro"||S.modal==="moto"){ L.push({k:"ocupantes"},{k:"combustivel"},{k:"rendimento"}); }
+  if(S.modal && S.modal!=="fretado"){ L.push({k:"retorno"}); }
+  if(S.retorno==="nao"){ L.push({k:"diarias"}); }
+  L.push({k:"coffee"});
+  return L;
+}
+
+function calcular(){
+  var t=[], mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
+  var fossil=0, bio=0, linhas=[], pend=false, porKm=0;
+  function add(s){ t.push(s); }
+
+  add("MODULO    " + mod.rot.replace(" · ","  "));
+  add("");
+
+  if(mod.online){
+    var W = {celular:5,notebook:45,desktop:150,tv:100}[S.aparelho];
+    var h = Number(S.tempo), mwh = W*h/1e6, kg = mwh*F.sin*1000;
+    add("ENERGIA DO APARELHO");
+    add("  potencia            = "+W+" W");
+    add("  tempo de conexao    = "+h.toLocaleString("pt-BR")+" h");
+    add("  consumo = "+W+" x "+h+" / 1e6  = "+mwh.toExponential(3)+" MWh");
+    add("  E = "+mwh.toExponential(3)+" x "+F.sin+" x 1000");
+    add("                      = "+kg.toFixed(4)+" kg");
+    fossil+=kg; linhas.push(["Energia do aparelho",kg]);
+  } else {
+    var sede = mod.sede===1 ? "Pato Branco" : "Dois Vizinhos";
+    var k = S.retorno==="sim" ? 2 : 1;
+    var dIda = (S.distSim>0) ? S.distSim : null;
+    var D = dIda===null ? null : dIda*k;
+
+    add("DESLOCAMENTO");
+    add("  origem   = "+S.municipio+"   [informado pelo participante]");
+    add("  destino  = "+sede);
+
+    if(S.modal==="pe"){
+      add("  a pe ou bicicleta  ->  E = 0");
+      linhas.push(["Deslocamento",0]);
+    } else if(S.modal==="eletrico"){
+      add("  veiculo eletrico   ->  E = 0 na camada A");
+      linhas.push(["Deslocamento",0]);
+    } else if(S.modal==="fretado"){
+      add("  onibus fretado pelo evento");
+      add("  lancado na camada B, em litros de diesel da transportadora");
+      add("  nao atribuido ao participante nesta camada  ->  E = 0");
+      linhas.push(["Deslocamento",0]);
+    } else {
+      add("  k = "+k+(k===2?"  (retorna no dia)":"  (pernoita)"));
+      if(D===null){
+        add("  d_ida    = distancia media do municipio, lancada na consolidacao");
+        add("  D = d_ida x "+k);
+      } else {
+        add("  d_ida    = "+dIda+" km   [distancia simulada]");
+        add("  D = "+dIda+" x "+k+"  = "+D+" km");
+      }
+      if(S.modal==="linha"){
+        porKm = F.onibusLinha;
+        add("  E = D x "+F.onibusLinha+" kgCO2e/pass.km   [DEFRA 2025, onibus rodoviario]");
+        if(D!==null){
+          var kgL = D*F.onibusLinha;
+          add("                      = "+kgL.toFixed(2)+" kg");
+          fossil+=kgL; linhas.push(["Deslocamento, ônibus de linha",kgL]);
+        } else { pend=true; linhas.push(["Deslocamento, ônibus de linha",null]); }
+      } else {
+        var comb = F[S.combustivel], n = Number(S.ocupantes);
+        var padrao = S.rendimento==="padrao";
+        var r = padrao ? (S.modal==="moto"?F.rPadraoMoto:F.rPadraoCarro) : Number(S.rendimento);
+        porKm = comb.fos/r/n;
+        add("  combustivel = "+comb.nome);
+        add("  r = "+r.toLocaleString("pt-BR")+" km/L"+(padrao?"   [premissa: valor padrao]":"   [declarado]"));
+        add("  n = "+n+" ocupante"+(n>1?"s":""));
+        add("");
+        add("  E   = ( D / r ) x "+comb.fos.toFixed(3)+" / n");
+        add("  Bio = ( D / r ) x "+comb.bio.toFixed(3)+" / n");
+        add("  por km:  E = "+porKm.toFixed(4)+" kgCO2e/km    Bio = "+(comb.bio/r/n).toFixed(4)+" kgCO2/km");
+        if(D!==null){
+          var L = D/r, ef = L*comb.fos/n, eb = L*comb.bio/n;
+          add("");
+          add("  L = "+D+" / "+r+"  = "+L.toFixed(3)+" L");
+          add("  E   = ( "+L.toFixed(3)+" x "+comb.fos.toFixed(3)+" ) / "+n+"  = "+ef.toFixed(2)+" kgCO2e");
+          add("  Bio = ( "+L.toFixed(3)+" x "+comb.bio.toFixed(3)+" ) / "+n+"  = "+eb.toFixed(2)+" kgCO2 biogenico");
+          fossil+=ef; bio+=eb; linhas.push(["Deslocamento",ef]);
+        } else { pend=true; linhas.push(["Deslocamento",null]); }
+      }
+    }
+
+    if(S.retorno==="nao"){
+      var hd = Number(S.diarias), kgH = hd*F.diaria;
+      add(""); add("HOSPEDAGEM");
+      add("  E = "+hd+" diaria"+(hd>1?"s":"")+" x "+F.diaria.toFixed(1)+"  = "+kgH.toFixed(2)+" kg   [DEFRA 2024, Brasil]");
+      fossil+=kgH; linhas.push(["Hospedagem",kgH]);
+    }
+
+    var nc = Number(S.coffee), kgR = nc*F.coffee;
+    add(""); add("COFFEE BREAK");
+    add("  E = "+nc+" x "+F.coffee.toFixed(2)+"  = "+kgR.toFixed(2)+" kg   [Poore e Nemecek 2018, porcao padrao]");
+    fossil+=kgR; linhas.push(["Coffee break",kgR]);
+  }
+
+  var mudas = fossil/1000*(1000/F.arvore)*F.replantio;
+  add(""); add(pend ? "TOTAL PARCIAL (sem deslocamento)" : "TOTAL");
+  add("  antropico            = "+fossil.toFixed(2)+" kgCO2e"+(pend?"  + deslocamento":""));
+  add("  biogenico (apartado) = "+bio.toFixed(2)+" kgCO2"+(pend?"  + deslocamento":""));
+  if(!pend){
+    add("");
+    add("MUDAS EQUIVALENTES");
+    add("  N = ("+fossil.toFixed(2)+" / 1000) x (1000 / "+F.arvore+") x "+F.replantio.toFixed(2));
+    add("    = "+mudas.toFixed(3)+" muda(s)");
+  }
+
+  return {fossil:fossil,bio:bio,mudas:mudas,linhas:linhas,pend:pend,porKm:porKm,sede:(mod.online?"":(mod.sede===1?"Pato Branco":"Dois Vizinhos")),trace:t.join("\n")};
+}
+
+function nb(n){ return n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function opt(rot,sub,fn){
+  var b=document.createElement("button");
+  b.type="button"; b.className="opt";
+  b.innerHTML = sub ? rot+'<span class="sub">'+sub+'</span>' : rot;
+  b.addEventListener("click",fn);
+  return b;
+}
+function ask(titulo,dica,filhos){
+  var el=$("screen"); el.innerHTML="";
+  var h=document.createElement("div"); h.className="q"; h.textContent=titulo; el.appendChild(h);
+  if(dica){ var d=document.createElement("div"); d.className="qhint"; d.textContent=dica; el.appendChild(d); }
+  var box=document.createElement("div"); box.className="opts";
+  filhos.forEach(function(c){ box.appendChild(c); });
+  el.appendChild(box);
+}
+function set(k,v){ S[k]=v; idx++; render(); }
+
+function render(){
+  var seq=steps(), total=seq.length;
+  var iniciou = !!S.modulo;
+  $("navRow").hidden = !iniciou;
+  $("prog").hidden   = !iniciou;
+  if(idx < total){
+    $("progFill").style.width = Math.round(idx/total*100)+"%";
+    $("progTxt").textContent  = (idx+1)+" de "+total;
+  } else {
+    $("progFill").style.width = "100%";
+    $("progTxt").textContent  = "concluído";
+  }
+  if(idx>=total){ return resultado(); }
+
+  var k = seq[idx].k;
+  var mod = MODULOS.filter(function(m){return m.id===S.modulo;})[0];
+
+  if(k==="modulo"){
+    ask("Qual módulo você está participando hoje?",null,
+      MODULOS.map(function(m){ return opt(m.rot,m.sub,function(){ S={modulo:m.id}; idx=1; render(); }); }));
+  }
+  else if(k==="dia"){
+    ask("De qual dia do Módulo 1 é esta resposta?","Responda uma vez para cada dia em que você participou.",
+      mod.dias.map(function(dd){ return opt(dd,null,function(){set("dia",dd);}); }));
+  }
+  else if(k==="municipio"){
+    var el=$("screen"); el.innerHTML="";
+    var h=document.createElement("div"); h.className="q"; h.textContent="De qual município você saiu hoje?";
+    var d=document.createElement("div"); d.className="qhint";
+    d.textContent="Digite o município e o estado. Não é preciso informar quilometragem.";
+    el.appendChild(h); el.appendChild(d);
+    var f=document.createElement("div"); f.className="field";
+    var inp=document.createElement("input"); inp.type="text"; inp.id="inpMun"; inp.maxLength=60;
+    inp.placeholder="Ex.: Francisco Beltrão, PR"; inp.autocomplete="address-level2"; inp.value=S.municipio||"";
+    var b=document.createElement("button"); b.className="btn"; b.type="button"; b.textContent="Continuar";
+    var go=function(){ var v=inp.value.trim().replace(/\s+/g," "); if(v.length>=3){ S.distSim=null; set("municipio",v); } else { inp.focus(); } };
+    b.addEventListener("click",go);
+    inp.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); });
+    f.appendChild(inp); f.appendChild(b); el.appendChild(f);
+  }
+  else if(k==="modal"){
+    ask("Como você veio hoje?",null,[
+      opt("Carro","Próprio ou carona. Híbrido entra aqui",function(){set("modal","carro");}),
+      opt("Motocicleta",null,function(){set("modal","moto");}),
+      opt("Ônibus de linha",null,function(){set("modal","linha");}),
+      opt("Ônibus fretado pelo evento","Lançado pela organização, não por você",function(){set("modal","fretado");}),
+      opt("A pé ou de bicicleta",null,function(){set("modal","pe");}),
+      opt("Veículo elétrico","Somente 100% elétrico",function(){set("modal","eletrico");})
+    ]);
+  }
+  else if(k==="ocupantes"){
+    ask("Quantas pessoas no veículo, contando você?","A emissão do veículo é dividida por este número.",
+      [1,2,3,4,5].map(function(n){ return opt(n===5?"5 ou mais":String(n),null,function(){set("ocupantes",n);}); }));
+  }
+  else if(k==="combustivel"){
+    ask("Qual combustível?",null,[
+      opt("Gasolina",null,function(){set("combustivel","gasolina");}),
+      opt("Etanol",null,function(){set("combustivel","etanol");}),
+      opt("Flex, abastecido com gasolina",null,function(){set("combustivel","gasolina");}),
+      opt("Flex, abastecido com etanol",null,function(){set("combustivel","etanol");}),
+      opt("Diesel",null,function(){set("combustivel","diesel");}),
+      opt("Não sei","Adota gasolina, hipótese conservadora",function(){set("combustivel","gasolina");})
+    ]);
+  }
+  else if(k==="rendimento"){
+    var el2=$("screen"); el2.innerHTML="";
+    var h2=document.createElement("div"); h2.className="q"; h2.textContent="Rendimento aproximado do veículo";
+    var d2=document.createElement("div"); d2.className="qhint";
+    d2.textContent="Em km por litro. Se não souber, o cálculo usa o valor padrão e registra a premissa.";
+    el2.appendChild(h2); el2.appendChild(d2);
+    var f2=document.createElement("div"); f2.className="field";
+    var i=document.createElement("input"); i.type="number"; i.id="inpRend"; i.min="1"; i.max="40"; i.step="0.5";
+    i.placeholder = (S.modal==="moto" ? "ex.: 30" : "ex.: 11");
+    var b2=document.createElement("button"); b2.className="btn"; b2.type="button"; b2.textContent="Continuar";
+    b2.addEventListener("click",function(){ var v=parseFloat(i.value); set("rendimento",(v>0&&v<=40)?v:"padrao"); });
+    f2.appendChild(i); f2.appendChild(b2); el2.appendChild(f2);
+    var box=document.createElement("div"); box.className="opts";
+    box.appendChild(opt("Não sei","Usa "+(S.modal==="moto"?"30":"10")+" km/L",function(){set("rendimento","padrao");}));
+    el2.appendChild(box);
+  }
+  else if(k==="retorno"){
+    ask("Você volta para casa hoje mesmo?",null,[
+      opt("Sim, ida e volta no dia",null,function(){set("retorno","sim");}),
+      opt("Não, pernoito","Entra a emissão de hospedagem",function(){set("retorno","nao");})
+    ]);
+  }
+  else if(k==="diarias"){
+    ask("Quantas diárias em hotel ou pousada?",null,
+      [1,2,3].map(function(n){ return opt(n+(n>1?" diárias":" diária"),null,function(){set("diarias",n);}); }));
+  }
+  else if(k==="coffee"){
+    ask("Você participou de coffee break do evento hoje?",null,[
+      opt("Não teve coffee break",null,function(){set("coffee",0);}),
+      opt("Um coffee break",null,function(){set("coffee",1);}),
+      opt("Dois coffee breaks",null,function(){set("coffee",2);})
+    ]);
+  }
+  else if(k==="aparelho"){
+    ask("Em que aparelho você assistiu?",null,[
+      opt("Celular",null,function(){set("aparelho","celular");}),
+      opt("Notebook",null,function(){set("aparelho","notebook");}),
+      opt("Computador de mesa",null,function(){set("aparelho","desktop");}),
+      opt("Televisão",null,function(){set("aparelho","tv");})
+    ]);
+  }
+  else if(k==="tempo"){
+    ask("Por quanto tempo ficou conectado?",null,[
+      opt("Menos de 1 hora",null,function(){set("tempo",0.75);}),
+      opt("1 a 2 horas",null,function(){set("tempo",1.5);}),
+      opt("Mais de 2 horas",null,function(){set("tempo",2.5);})
+    ]);
+  }
+}
+
+function resultado(){
+  var el=$("screen"); el.innerHTML="";
+  var mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
+  var qual = mod.rot.split(" · ")[0] + (S.dia ? ", dia "+S.dia.split(",")[0] : "");
+
+  var h=document.createElement("div"); h.className="q"; h.textContent="Obrigado pela participação!"; el.appendChild(h);
+  var p=document.createElement("p"); p.className="fim";
+  p.textContent="Sua resposta do "+qual+" foi concluída. Ela ajuda a AEFOS a medir a pegada de carbono do Circuito e a planejar o plantio de mudas nativas que vai compensar as emissões do evento.";
+  el.appendChild(p);
+
+  $("navRow").hidden = true;
+  $("prog").hidden = true;
+}
+
+$("back").addEventListener("click",function(){ if(idx>0){ idx--; render(); } });
+$("restart").addEventListener("click",function(){ S={}; idx=0; render(); });
+render();
+</script>
+</body>
+</html>
