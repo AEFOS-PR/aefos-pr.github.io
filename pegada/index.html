@@ -179,7 +179,7 @@
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Versão 3.3, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
+      © 2026 AEFOS · Versão 3.4, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
     </div>
   </div>
 </footer>
@@ -208,7 +208,7 @@ var MODULOS = [
 /* ---------- gravacao das respostas ---------- */
 /* Cole entre as aspas o endereco do Web App do Google Apps Script (termina em /exec). */
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbwUTBbHM9fRuUN6L6SzVo_W-hy0ER-yUPS1_SuapZ9y19UbXrrCw6K-5_AsB4brg5YefQ/exec";
-var VERSAO = "3.3";
+var VERSAO = "3.4";
 var FILA = "aefos_pegada_fila";
 
 function lerFila(){ try{ return JSON.parse(localStorage.getItem(FILA)||"[]"); }catch(e){ return []; } }
@@ -261,8 +261,10 @@ function telaJaRespondeu(){
 }
 
 /* ---------- a gravacao comeca no primeiro dia do Circuito ---------- */
-var INICIO = "2026-10-05";
+var INICIO = "2026-10-04";        /* gravacao na planilha */
+var INICIO_TRAVA = "2026-10-05";  /* uma resposta por dia */
 function gravacaoAtiva(){ return hoje() >= INICIO; }
+function travaAtiva(){ return hoje() >= INICIO_TRAVA; }
 
 var S = {}, idx = 0;
 function $(id){ return document.getElementById(id); }
@@ -559,7 +561,7 @@ function render(){
 function resultado(){
   var el=$("screen"); el.innerHTML="";
   var mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
-  if(!S.enviado){ S.enviado=true; if(gravacaoAtiva()){ try{ enviar(montarResposta()); }catch(e){} marcarRespondido(); } }
+  if(!S.enviado){ S.enviado=true; if(gravacaoAtiva()){ try{ enviar(montarResposta()); }catch(e){} if(travaAtiva()){ marcarRespondido(); } } }
   var qual = mod.rot.split(" · ")[0] + (S.dia ? ", dia "+S.dia.split(",")[0] : "");
 
   var h=document.createElement("div"); h.className="q"; h.textContent="Obrigado pela participação"+(S.nome?", "+S.nome.split(" ")[0]:"")+"!"; el.appendChild(h);
@@ -579,7 +581,7 @@ function resultado(){
 $("back").addEventListener("click",function(){ if(idx>0){ idx--; render(); } });
 $("restart").addEventListener("click",function(){ S={}; idx=0; render(); });
 if(gravacaoAtiva()){ reenviarFila(); }
-if(gravacaoAtiva() && jaRespondeuHoje()){ telaJaRespondeu(); } else { render(); }
+if(travaAtiva() && jaRespondeuHoje()){ telaJaRespondeu(); } else { render(); }
 </script>
 </body>
 </html>
