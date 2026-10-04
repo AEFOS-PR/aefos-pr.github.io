@@ -179,7 +179,7 @@
     <img src="../assets/logo.png" alt="AEFOS">
     <p>Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
     <div class="foot-bot">
-      © 2026 AEFOS · Versão 3.0, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
+      © 2026 AEFOS · Versão 3.2, 04/10/2026 · Respostas registradas pela AEFOS para o inventário do Circuito.
     </div>
   </div>
 </footer>
@@ -207,8 +207,8 @@ var MODULOS = [
 
 /* ---------- gravacao das respostas ---------- */
 /* Cole entre as aspas o endereco do Web App do Google Apps Script (termina em /exec). */
-var ENDPOINT = "";
-var VERSAO = "3.0";
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwUTBbHM9fRuUN6L6SzVo_W-hy0ER-yUPS1_SuapZ9y19UbXrrCw6K-5_AsB4brg5YefQ/exec";
+var VERSAO = "3.2";
 var FILA = "aefos_pegada_fila";
 
 function lerFila(){ try{ return JSON.parse(localStorage.getItem(FILA)||"[]"); }catch(e){ return []; } }
@@ -244,6 +244,20 @@ function montarResposta(){
     bio_por_km: r.pend ? Number(r.bioKm.toFixed(5)) : 0,
     kg_sem_deslocamento: Number(r.fossil.toFixed(4))
   };
+}
+
+/* ---------- uma resposta por dia, por aparelho ---------- */
+var CHAVE_DIA = "aefos_pegada_ultimo_dia";
+function hoje(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
+function jaRespondeuHoje(){ try{ return localStorage.getItem(CHAVE_DIA)===hoje(); }catch(e){ return false; } }
+function marcarRespondido(){ try{ localStorage.setItem(CHAVE_DIA,hoje()); }catch(e){} }
+function telaJaRespondeu(){
+  var el=$("screen"); el.innerHTML="";
+  $("navRow").hidden=true; $("prog").hidden=true;
+  var h=document.createElement("div"); h.className="q"; h.textContent="Você já respondeu hoje. Obrigado!"; el.appendChild(h);
+  var p=document.createElement("p"); p.className="fim";
+  p.textContent="Cada pessoa responde uma vez por dia. Se você participar de outro dia do Circuito, responda de novo nesse dia. As emissões do Circuito serão compensadas com o plantio de mudas nativas, em um evento posterior.";
+  el.appendChild(p);
 }
 
 var S = {}, idx = 0;
@@ -448,7 +462,7 @@ function render(){
     e0.appendChild(b0);
   }
   else if(k==="modulo"){
-    ask("Qual módulo você está respondendo agora?","Cada resposta vale para um módulo e um dia.",
+    ask("Qual módulo você está respondendo agora?","Cada pessoa responde uma vez por dia.",
       MODULOS.map(function(m){ return opt(m.rot,m.sub,function(){ S={nome:S.nome,email:S.email,whatsapp:S.whatsapp,modulo:m.id}; idx=2; render(); }); }));
   }
   else if(k==="dia"){
@@ -541,7 +555,7 @@ function render(){
 function resultado(){
   var el=$("screen"); el.innerHTML="";
   var mod=MODULOS.filter(function(m){return m.id===S.modulo;})[0];
-  if(!S.enviado){ S.enviado=true; try{ enviar(montarResposta()); }catch(e){} }
+  if(!S.enviado){ S.enviado=true; try{ enviar(montarResposta()); }catch(e){} marcarRespondido(); }
   var qual = mod.rot.split(" · ")[0] + (S.dia ? ", dia "+S.dia.split(",")[0] : "");
 
   var h=document.createElement("div"); h.className="q"; h.textContent="Obrigado pela participação"+(S.nome?", "+S.nome.split(" ")[0]:"")+"!"; el.appendChild(h);
@@ -556,7 +570,7 @@ function resultado(){
 $("back").addEventListener("click",function(){ if(idx>0){ idx--; render(); } });
 $("restart").addEventListener("click",function(){ S={}; idx=0; render(); });
 reenviarFila();
-render();
+if(jaRespondeuHoje()){ telaJaRespondeu(); } else { render(); }
 </script>
 </body>
 </html>
