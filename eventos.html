@@ -27,7 +27,6 @@
   .nav-inner{max-width:1160px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;gap:20px}
   .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
   .nav-logo img{height:40px}
-  .nav-logo b{font-size:17px;font-weight:800;letter-spacing:.3px;color:var(--forest-700)}
   .nav-links{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .nav-links a{text-decoration:none;font-size:14.5px;font-weight:600;color:var(--ink-2);padding:8px 12px;border-radius:9px}
   .nav-links a:hover{background:var(--forest-100);color:var(--forest-700)}
@@ -35,7 +34,7 @@
   .nav-links a.cta:hover{background:var(--forest-700);color:#fff}
   .nav-links a.on{background:var(--forest-100);color:var(--forest-700)}
   .nav-toggle{display:none;margin-left:auto;border:1px solid var(--line);background:var(--surface);color:var(--forest-700);font:inherit;font-size:14.5px;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer}
-  @media(max-width:1080px){
+  @media(max-width:960px){
     .nav-inner{flex-wrap:wrap}
     .nav-toggle{display:inline-flex;align-items:center;gap:6px}
     .nav-links{display:none;width:100%;margin-left:0;flex-direction:column;align-items:stretch;gap:2px;padding:6px 0 4px}
@@ -134,7 +133,7 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="AEFOS"><b>AEFOS</b></a>
+    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="AEFOS — página inicial"></a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">☰ Menu</button>
     <nav class="nav-links" id="navLinks">
       <a href="index.html">Início</a>

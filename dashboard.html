@@ -132,7 +132,8 @@
     main{padding:16px 15px 44px}
     .topbar-inner{flex-wrap:wrap;gap:10px;padding:10px 15px}
     .topbar-title{display:none}
-    .topbar-actions{margin-left:auto}
+    .topbar-actions{margin-left:0;width:100%;flex-wrap:wrap;gap:8px}
+    .backbtn{font-size:12px;padding:6px 10px}
     .chip{font-size:11px;padding:5px 9px}
     .toggle{padding:5px 9px;font-size:11px}
     nav.sections{flex-wrap:nowrap;overflow-x:auto;padding:0 15px 2px;-webkit-overflow-scrolling:touch}
@@ -231,7 +232,7 @@
     </div>
     <div class="topbar-actions">
       <a href="index.html" class="backbtn">← Voltar ao site</a>
-      <span class="chip" id="sig-updated">Atualizado em 06/10/2026</span>
+      <span class="chip" id="sig-updated">SIG atualizado em 06/10/2026</span>
       <button class="toggle" id="themeBtn" title="Alternar tema">🌙 <span id="themeLbl">Escuro</span></button>
     </div>
   </div>
@@ -549,10 +550,11 @@
 <footer>
   <div style="text-align:center;margin:6px 0 22px"><a href="index.html" class="backbtn" style="font-size:14px;padding:11px 22px">← Voltar ao site da AEFOS</a></div>
   <div class="hr"></div>
-  <b>Fontes:</b> Departamento de Fiscalização (Defis) — CREA-PR (dados fornecidos por e-mail em 16/07/2026) &middot;
-  <b>SIG CREA-PR</b> — Sistema de Informações Geográficas, painéis "Profissionais" e "ARTs por Modalidade/Título Profissional" (sig.crea-pr.org.br), recorte regional 2026.<br>
-  <b>Notas:</b> dados de 2026 são parciais (até 15/07). Os totais estaduais seguem a classificação por <i>título profissional</i> (Defis); o recorte por Regional segue a classificação por <i>modalidade</i> (SIG), o que explica pequenas diferenças de total. No ranking de serviços, o valor é o nº de serviços anotados — uma ART pode conter vários serviços.<br>
-  Preparado para o evento do curso de Engenharia Florestal &middot; AEFOS — Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.
+  <b>Fontes:</b> <b>SIG CREA-PR</b> — Sistema de Informações Geográficas, painéis "Profissionais" e "ARTs por Modalidade/Título Profissional" (sig.crea-pr.org.br), consulta em <span id="sig-foot-date">06/10/2026</span> &middot;
+  <b>Defis</b> — Departamento de Fiscalização do CREA-PR (dados fornecidos por e-mail em 16/07/2026, posição até 15/07/2026).<br>
+  <b>O que vem de cada fonte:</b> do SIG, atualizados em <span id="sig-foot-date2">06/10/2026</span> — engenheiros florestais ativos e sua evolução, ARTs por Regional e por município, recorte do território da AEFOS, produtividade e perfil profissional. Do Defis, parciais até 15/07/2026 e atualizados somente a cada novo relatório — profissionais que emitiram ART, ARTs em 2026 (parcial) e evolução anual, tipos de ART, ranking de serviços, fiscalização e Câmara Especializada.<br>
+  <b>Notas:</b> os totais do Defis seguem a classificação por <i>título profissional</i>; os do SIG seguem a classificação por <i>modalidade</i>. Por isso, e pelas datas de coleta diferentes, os totais das duas fontes não coincidem. No ranking de serviços, o valor é o nº de serviços anotados — uma ART pode conter vários serviços.<br>
+  AEFOS — Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.
 </footer>
 
 <div class="tt" id="tt"></div>
@@ -876,7 +878,7 @@ function applySig(){
     set('sig-art-cp', `Cascavel ${fmt(A.cascavelArt)} · Pato Branco ${fmt(A.patoArt)}`);
     set('sig-prod',(A.aefosProd!=null?String(A.aefosProd).replace('.',','):''));
     if(S.prof) set('sig-perfil-total',`${fmt(S.prof.total)} profissionais da modalidade`);
-    if(S.atualizadoEm){const d=S.atualizadoEm.split('-');set('sig-updated',`Atualizado em ${d[2]}/${d[1]}/${d[0]}`);}
+    if(S.atualizadoEm){const d=S.atualizadoEm.split('-'),dt=`${d[2]}/${d[1]}/${d[0]}`;set('sig-updated',`SIG atualizado em ${dt}`);set('sig-foot-date',dt);set('sig-foot-date2',dt);}
   }catch(e){console.warn('SIG_DATA:',e);}
 }
 applySig();
