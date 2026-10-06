@@ -431,7 +431,7 @@
         <div class="row"><span class="rk">★</span><div class="rt"><b>Dois Vizinhos</b> — sede da AEFOS, na Regional Pato Branco — está entre os <b>5 municípios com mais ARTs florestais do Paraná</b> (188 ARTs em 2026), ao lado de Curitiba, Ponta Grossa, São José dos Pinhais e São Mateus do Sul.</div></div>
         <div class="row"><span class="rk">⚡</span><div class="rt">As regionais da AEFOS registram em média <b>~8,0 ARTs por profissional</b> em 2026 (1.269 ÷ 159), quase <b>3× a média estadual</b> (~2,9) — um território de alta produtividade técnica no campo.</div></div>
       </div>
-      <p class="note">Profissionais (total, registro, visto, gênero e distribuição por regional) vêm direto do SIG CREA-PR — título Eng. Florestal — e são atualizados automaticamente. As ARTs por regional também vêm do SIG (total 6.409 em 2026). Alguns indicadores de produção e fiscalização vêm do Defis/CREA-PR (por isso o total de ARTs em destaque, 4.530, difere do total do SIG, 6.409 — fontes e datas de coleta diferentes).</p>
+      <p class="note">Profissionais (total, registro, visto, gênero e distribuição por regional) vêm direto do SIG CREA-PR — título Eng. Florestal — e são atualizados periodicamente (data no topo do painel). As ARTs por regional também vêm do SIG (total 6.409 em 2026). Alguns indicadores de produção e fiscalização vêm do Defis/CREA-PR (por isso o total de ARTs em destaque, 4.530, difere do total do SIG, 6.409 — fontes e datas de coleta diferentes).</p>
     </div>
   </section>
 
@@ -828,7 +828,7 @@ function renderAll(){
   donut('donut-genero-aefos',D.generoAefos,[cssv('--forest-700'),cssv('--forest-400')]);
   donut('donut-registro',D.registro,[cssv('--forest-600'),cssv('--forest-300')]);
 }
-/* ---------------- dados do SIG (atualização automática) ---------------- */
+/* ---------------- dados do SIG (atualização sob demanda) ---------------- */
 function pct(part,total){return total?((part/total*100).toFixed(1).replace('.',',')+'%'):'—';}
 function applySig(){
   const S=window.SIG_DATA; if(!S) return;

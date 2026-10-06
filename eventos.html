@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventos e acervo de fotos — AEFOS</title>
+<meta name="description" content="Acervo de eventos da AEFOS-PR: cartazes, programação e galeria de fotos. Jantar do Dia do Engenheiro Florestal 2026 e 1º Circuito de Capacitação Técnica Florestal.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<style>
+  :root{
+    --forest-950:#0b2418;--forest-900:#0f3020;--forest-800:#16482c;--forest-700:#1b6b3a;
+    --forest-600:#218049;--forest-500:#2e9e5b;--forest-400:#4bbd78;--forest-300:#8bd6a6;--forest-100:#e6f3ea;
+    --amber:#d98a00;--amber-soft:#f6e3bd;
+    --ink:#122318;--ink-2:#41544a;--muted:#77887d;
+    --page:#f4f8f4;--surface:#ffffff;--line:#e3ece5;
+    --ring:rgba(16,36,26,.09);--shadow:0 1px 2px rgba(16,36,26,.05),0 10px 30px rgba(16,36,26,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--page);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  img{max-width:100%;display:block}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1160px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;gap:20px}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+  .nav-logo img{height:40px}
+  .nav-logo b{font-size:17px;font-weight:800;letter-spacing:.3px;color:var(--forest-700)}
+  .nav-links{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .nav-links a{text-decoration:none;font-size:14.5px;font-weight:600;color:var(--ink-2);padding:8px 12px;border-radius:9px}
+  .nav-links a:hover,.nav-links a.on{background:var(--forest-100);color:var(--forest-700)}
+  .nav-links a.cta{background:var(--forest-600);color:#fff}
+  .nav-links a.cta:hover{background:var(--forest-700);color:#fff}
+  @media(max-width:820px){.nav-logo b{display:none}.nav-links{gap:2px}.nav-links a{padding:7px 9px;font-size:13px}}
+  @media(max-width:560px){.nav-links a.hideSm{display:none}}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;transition:transform .1s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-amber{background:var(--amber);color:#3a2600}
+  .btn-green{background:var(--forest-600);color:#fff}
+  .btn-sm{padding:10px 16px;font-size:14px;border-radius:10px}
+
+  /* hero */
+  .hero{color:#fff;background:radial-gradient(1100px 600px at 15% -20%,#1c5e39 0%,#0f3020 55%,#0b2418 100%)}
+  .hero .wrap{padding:52px 24px 56px}
+  .hero .kick{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--forest-300)}
+  .hero h1{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.08;max-width:20ch;margin-top:8px}
+  .hero p.lead{font-size:clamp(15px,2vw,18px);color:#d7e8dc;margin-top:16px;max-width:62ch}
+
+  section.block{padding:56px 0}
+  section.block.alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .kicker{font-size:12.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--forest-600)}
+  h2.sec{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.5px;margin:8px 0 6px}
+  .sec-lead{font-size:16px;color:var(--ink-2);max-width:70ch;margin-bottom:8px}
+
+  /* índice de eventos */
+  .evlist{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:30px}
+  @media(max-width:760px){.evlist{grid-template-columns:1fr}}
+  .evcard{display:flex;background:var(--surface);border:1px solid var(--ring);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);text-decoration:none;transition:transform .12s}
+  .evcard:hover{transform:translateY(-2px)}
+  .evcard .th{flex:0 0 132px;background:var(--forest-900) center/cover no-repeat}
+  .evcard .tx{padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+  .evcard .date{font-size:12.5px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.5px}
+  .evcard h3{font-size:18px;line-height:1.25}
+  .evcard p{font-size:14px;color:var(--ink-2)}
+  .pilltag{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;width:fit-content;margin-top:4px}
+  .pilltag.done{color:var(--forest-700);background:var(--forest-100)}
+  .pilltag.live{color:#7a4a00;background:var(--amber-soft)}
+
+  /* evento */
+  .evhead{display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:start;margin-top:30px}
+  @media(max-width:860px){.evhead{grid-template-columns:1fr}}
+  .poster{display:block;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--ring);background:#fff;cursor:zoom-in}
+  .poster-cap{font-size:12.5px;color:var(--muted);margin-top:8px;text-align:center}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+  @media(max-width:560px){.facts{grid-template-columns:1fr}}
+  .fact{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .fact .fl{font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .fact .fv{font-size:15px;font-weight:700;margin-top:2px}
+  .evinfo p{font-size:15.5px;color:var(--ink-2);max-width:66ch}
+  .evinfo h3{font-size:16px;margin:22px 0 10px}
+  .prog{list-style:none;border-left:3px solid var(--forest-300);padding-left:16px;display:flex;flex-direction:column;gap:9px}
+  .prog li{font-size:14.5px;color:var(--ink-2)}
+  .prog b{color:var(--forest-700);margin-right:8px}
+  .apoio{font-size:13.5px;color:var(--muted);margin-top:18px}
+
+  /* galeria */
+  .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:44px 0 16px}
+  .ghead h3{font-size:20px}
+  .ghead span{font-size:13.5px;color:var(--muted)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+  @media(max-width:520px){.gallery{grid-template-columns:repeat(2,1fr);gap:8px}}
+  .gallery a.g{display:block;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:var(--forest-100);cursor:zoom-in}
+  .gallery a.g.wide{grid-column:span 2;aspect-ratio:auto}
+  .gallery img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+  .gallery a.g:hover img{transform:scale(1.04)}
+  .gallery a.g:focus-visible,.poster:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(6,18,12,.94);display:none;align-items:center;justify-content:center}
+  .lb.open{display:flex}
+  .lb img{max-width:calc(100vw - 24px);max-height:calc(100vh - 96px);border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .lb button{position:absolute;border:0;cursor:pointer;color:#fff;background:rgba(255,255,255,.14);border-radius:999px;width:46px;height:46px;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center}
+  .lb button:hover{background:rgba(255,255,255,.28)}
+  .lb .x{top:14px;right:14px}
+  .lb .pv{left:12px;top:50%;transform:translateY(-50%)}
+  .lb .nx{right:12px;top:50%;transform:translateY(-50%)}
+  .lb .cnt{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#cfe0d5;font-size:13.5px}
+  .lb .cnt a{color:#fff;margin-left:12px}
+
+  /* footer */
+  footer.site{background:var(--forest-950);color:#c8d8ce;padding:48px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}
+  @media(max-width:720px){.foot-grid{grid-template-columns:1fr;gap:24px}}
+  footer.site img{height:54px;background:#fff;border-radius:12px;padding:7px 10px}
+  footer.site h4{color:#fff;font-size:14px;margin-bottom:12px;letter-spacing:.5px}
+  footer.site a{color:#c8d8ce;text-decoration:none;display:block;font-size:14px;padding:3px 0}
+  footer.site a:hover{color:#fff}
+  footer.site a[href^="http"]{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .foot-bot{border-top:1px solid rgba(255,255,255,.12);margin-top:34px;padding-top:20px;font-size:12.5px;color:#8fa295;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="AEFOS"><b>AEFOS</b></a>
+    <nav class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="index.html#sobre" class="hideSm">Sobre</a>
+      <a href="eventos.html" class="on">Eventos</a>
+      <a href="circuito.html" class="hideSm">Circuito 2026</a>
+      <a class="cta" href="dashboard.html">Painel de dados</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="kick">Acervo AEFOS</div>
+    <h1>Eventos e memória da associação</h1>
+    <p class="lead">Cartazes, programação e fotos dos encontros promovidos pela AEFOS — para quem participou rever e para quem não pôde ir conhecer.</p>
+  </div>
+</div>
+
+<!-- ÍNDICE DE EVENTOS (adicione um novo .evcard a cada evento) -->
+<section class="block">
+  <div class="wrap">
+    <div class="kicker">Eventos</div>
+    <h2 class="sec">Todos os eventos</h2>
+    <div class="evlist">
+      <a class="evcard" href="circuito.html">
+        <div class="th" style="background-image:url('assets/circuito/geral.jpg')"></div>
+        <div class="tx">
+          <div class="date">05/10 a 14/11/2026</div>
+          <h3>1º Circuito de Capacitação Técnica Florestal</h3>
+          <p>6 módulos, on-line e presenciais, em Dois Vizinhos e Pato Branco.</p>
+          <span class="pilltag live">Em andamento · inscrições</span>
+        </div>
+      </a>
+      <a class="evcard" href="#jantar-2026">
+        <div class="th" style="background-image:url('assets/eventos/jantar-2026/mini-01.jpg')"></div>
+        <div class="tx">
+          <div class="date">17/07/2026</div>
+          <h3>Dia do Engenheiro Florestal — palestras e jantar</h3>
+          <p>Duas palestras e jantar de confraternização em Dois Vizinhos.</p>
+          <span class="pilltag done">Realizado · 47 fotos</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTO: JANTAR 2026 ============ -->
+<section class="block alt" id="jantar-2026">
+  <div class="wrap">
+    <div class="kicker">17 de julho de 2026 · Dois Vizinhos – PR</div>
+    <h2 class="sec">Dia do Engenheiro Florestal</h2>
+    <p class="sec-lead">Técnica, gestão e propósito para florestar um futuro melhor.</p>
+
+    <div class="evhead">
+      <div>
+        <a class="poster" href="assets/evento-2026.jpg" data-poster="1"><img src="assets/evento-2026.jpg" alt="Cartaz do Dia do Engenheiro Florestal 2026 — AEFOS-PR"></a>
+        <div class="poster-cap">Cartaz oficial · clique para ampliar</div>
+      </div>
+      <div class="evinfo">
+        <p>A AEFOS reuniu associados, profissionais, estudantes e parceiros para celebrar o Dia do Engenheiro Florestal com duas palestras técnicas e um jantar de confraternização.</p>
+        <div class="facts">
+          <div class="fact"><div class="fl">Data</div><div class="fv">17/07/2026 · sexta-feira</div></div>
+          <div class="fact"><div class="fl">Local</div><div class="fv">Salão de Festas do Edifício Epic</div></div>
+          <div class="fact"><div class="fl">Cidade</div><div class="fv">Dois Vizinhos – PR</div></div>
+        </div>
+        <h3>Programação</h3>
+        <ul class="prog">
+          <li><b>18h00</b>Recepção e credenciamento</li>
+          <li><b>18h30</b>Abertura e boas-vindas</li>
+          <li><b>19h00</b>Palestra 1 — Reforma Tributária e a Atuação do Engenheiro Florestal · Diogo Dalla Chiesa (contador)</li>
+          <li><b>20h00</b>Palestra 2 — A Conservação Ambiental e a Produção Florestal · Ana Auer (engenheira florestal)</li>
+          <li><b>20h30</b>Jantar e confraternização</li>
+        </ul>
+        <p class="apoio"><b>Patrocinadores:</b> Neofloresta · Simbiose · Ipê · Plantplan &nbsp;·&nbsp; <b>Apoio:</b> UTFPR – Campus Dois Vizinhos</p>
+      </div>
+    </div>
+
+    <div class="ghead"><h3>Galeria de fotos</h3><span>47 fotos · clique para ampliar</span></div>
+    <div class="gallery" id="gal-jantar-2026">
+      <a class="g wide" href="assets/eventos/jantar-2026/foto-01.jpg" data-i="0"><img loading="lazy" src="assets/eventos/jantar-2026/mini-01.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 1 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-02.jpg" data-i="1"><img loading="lazy" src="assets/eventos/jantar-2026/mini-02.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 2 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-03.jpg" data-i="2"><img loading="lazy" src="assets/eventos/jantar-2026/mini-03.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 3 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-04.jpg" data-i="3"><img loading="lazy" src="assets/eventos/jantar-2026/mini-04.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 4 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-05.jpg" data-i="4"><img loading="lazy" src="assets/eventos/jantar-2026/mini-05.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 5 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-06.jpg" data-i="5"><img loading="lazy" src="assets/eventos/jantar-2026/mini-06.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 6 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-07.jpg" data-i="6"><img loading="lazy" src="assets/eventos/jantar-2026/mini-07.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 7 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-08.jpg" data-i="7"><img loading="lazy" src="assets/eventos/jantar-2026/mini-08.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 8 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-09.jpg" data-i="8"><img loading="lazy" src="assets/eventos/jantar-2026/mini-09.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 9 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-10.jpg" data-i="9"><img loading="lazy" src="assets/eventos/jantar-2026/mini-10.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 10 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-11.jpg" data-i="10"><img loading="lazy" src="assets/eventos/jantar-2026/mini-11.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 11 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-12.jpg" data-i="11"><img loading="lazy" src="assets/eventos/jantar-2026/mini-12.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 12 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-13.jpg" data-i="12"><img loading="lazy" src="assets/eventos/jantar-2026/mini-13.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 13 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-14.jpg" data-i="13"><img loading="lazy" src="assets/eventos/jantar-2026/mini-14.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 14 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-15.jpg" data-i="14"><img loading="lazy" src="assets/eventos/jantar-2026/mini-15.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 15 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-16.jpg" data-i="15"><img loading="lazy" src="assets/eventos/jantar-2026/mini-16.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 16 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-17.jpg" data-i="16"><img loading="lazy" src="assets/eventos/jantar-2026/mini-17.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 17 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-18.jpg" data-i="17"><img loading="lazy" src="assets/eventos/jantar-2026/mini-18.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 18 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-19.jpg" data-i="18"><img loading="lazy" src="assets/eventos/jantar-2026/mini-19.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 19 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-20.jpg" data-i="19"><img loading="lazy" src="assets/eventos/jantar-2026/mini-20.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 20 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-21.jpg" data-i="20"><img loading="lazy" src="assets/eventos/jantar-2026/mini-21.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 21 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-22.jpg" data-i="21"><img loading="lazy" src="assets/eventos/jantar-2026/mini-22.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 22 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-23.jpg" data-i="22"><img loading="lazy" src="assets/eventos/jantar-2026/mini-23.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 23 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-24.jpg" data-i="23"><img loading="lazy" src="assets/eventos/jantar-2026/mini-24.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 24 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-25.jpg" data-i="24"><img loading="lazy" src="assets/eventos/jantar-2026/mini-25.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 25 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-26.jpg" data-i="25"><img loading="lazy" src="assets/eventos/jantar-2026/mini-26.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 26 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-27.jpg" data-i="26"><img loading="lazy" src="assets/eventos/jantar-2026/mini-27.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 27 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-28.jpg" data-i="27"><img loading="lazy" src="assets/eventos/jantar-2026/mini-28.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 28 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-29.jpg" data-i="28"><img loading="lazy" src="assets/eventos/jantar-2026/mini-29.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 29 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-30.jpg" data-i="29"><img loading="lazy" src="assets/eventos/jantar-2026/mini-30.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 30 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-31.jpg" data-i="30"><img loading="lazy" src="assets/eventos/jantar-2026/mini-31.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 31 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-32.jpg" data-i="31"><img loading="lazy" src="assets/eventos/jantar-2026/mini-32.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 32 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-33.jpg" data-i="32"><img loading="lazy" src="assets/eventos/jantar-2026/mini-33.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 33 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-34.jpg" data-i="33"><img loading="lazy" src="assets/eventos/jantar-2026/mini-34.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 34 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-35.jpg" data-i="34"><img loading="lazy" src="assets/eventos/jantar-2026/mini-35.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 35 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-36.jpg" data-i="35"><img loading="lazy" src="assets/eventos/jantar-2026/mini-36.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 36 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-37.jpg" data-i="36"><img loading="lazy" src="assets/eventos/jantar-2026/mini-37.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 37 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-38.jpg" data-i="37"><img loading="lazy" src="assets/eventos/jantar-2026/mini-38.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 38 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-39.jpg" data-i="38"><img loading="lazy" src="assets/eventos/jantar-2026/mini-39.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 39 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-40.jpg" data-i="39"><img loading="lazy" src="assets/eventos/jantar-2026/mini-40.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 40 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-41.jpg" data-i="40"><img loading="lazy" src="assets/eventos/jantar-2026/mini-41.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 41 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-42.jpg" data-i="41"><img loading="lazy" src="assets/eventos/jantar-2026/mini-42.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 42 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-43.jpg" data-i="42"><img loading="lazy" src="assets/eventos/jantar-2026/mini-43.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 43 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-44.jpg" data-i="43"><img loading="lazy" src="assets/eventos/jantar-2026/mini-44.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 44 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-45.jpg" data-i="44"><img loading="lazy" src="assets/eventos/jantar-2026/mini-45.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 45 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-46.jpg" data-i="45"><img loading="lazy" src="assets/eventos/jantar-2026/mini-46.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 46 de 47"></a>
+      <a class="g" href="assets/eventos/jantar-2026/foto-47.jpg" data-i="46"><img loading="lazy" src="assets/eventos/jantar-2026/mini-47.jpg" alt="Jantar do Dia do Engenheiro Florestal 2026 — foto 47 de 47"></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site" id="contato">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="assets/logo.png" alt="AEFOS">
+        <p style="margin-top:14px;max-width:38ch;font-size:14px;color:#a9c3b3">Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <a href="index.html">Início</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="circuito.html">Circuito 2026</a>
+        <a href="dashboard.html">Painel de dados</a>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <a href="mailto:aefospr@gmail.com">aefospr@gmail.com</a>
+        <a href="tel:+554635721413">(46) 3572-1413</a>
+        <a href="https://www.facebook.com/AEFOSPR/" target="_blank" rel="noopener">Facebook: /AEFOSPR ↗</a>
+        <a>Dois Vizinhos – PR</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 AEFOS — Associação dos Engenheiros Florestais do Oeste e Sudoeste do Paraná.</span>
+      <span>Quer uma foto removida? Escreva para aefospr@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="x" id="lbx" aria-label="Fechar">✕</button>
+  <button class="pv" id="lbp" aria-label="Foto anterior">‹</button>
+  <img id="lbi" alt="">
+  <button class="nx" id="lbn" aria-label="Próxima foto">›</button>
+  <div class="cnt"><span id="lbc"></span><a id="lbd" href="#" download>Baixar foto</a></div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),img=document.getElementById('lbi'),cnt=document.getElementById('lbc'),
+      dl=document.getElementById('lbd'),pv=document.getElementById('lbp'),nx=document.getElementById('lbn');
+  var set=[],i=0,last=null;
+  function show(){var a=set[i];img.src=a.href;img.alt=a.querySelector('img').alt;dl.href=a.href;
+    cnt.textContent=set.length>1?(i+1)+' de '+set.length:'';
+    pv.style.display=nx.style.display=set.length>1?'':'none';}
+  function open(list,k,el){set=list;i=k;last=el;show();lb.classList.add('open');document.body.style.overflow='hidden';
+    document.getElementById('lbx').focus();}
+  function close(){lb.classList.remove('open');img.src='';document.body.style.overflow='';if(last)last.focus();}
+  function go(d){if(set.length<2)return;i=(i+d+set.length)%set.length;show();}
+  document.querySelectorAll('.gallery').forEach(function(g){
+    var list=[].slice.call(g.querySelectorAll('a.g'));
+    list.forEach(function(a,k){a.addEventListener('click',function(e){e.preventDefault();open(list,k,a);});});
+  });
+  document.querySelectorAll('a.poster').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();open([a],0,a);});});
+  document.getElementById('lbx').onclick=close;pv.onclick=function(){go(-1)};nx.onclick=function(){go(1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();else if(e.key==='ArrowLeft')go(-1);else if(e.key==='ArrowRight')go(1);});
+  var x0=null;
+  lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50)go(dx<0?1:-1);x0=null;},{passive:true});
+})();
+</script>
+</body>
+</html>
